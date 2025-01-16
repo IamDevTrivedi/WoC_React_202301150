@@ -60,7 +60,6 @@ const Contact = () => {
         if (Object.keys(validationErrors).length === 0) {
             setIsSubmitting(true)
 
-            console.log('ACCESS_KEY', ACCESS_KEY);
             try {
                 const response = await fetch('https://api.web3forms.com/submit', {
                     method: 'POST',

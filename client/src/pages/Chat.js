@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { ChatMessage } from "../components/ChatMessage";
 import { ChatInput } from "../components/ChatInput";
 import { LoadingDots } from "../components/LoadingDots";
+import { message } from 'antd';
 
 // Simulated API response delay
 const RESPONSE_DELAY = 1000;
@@ -54,7 +55,7 @@ function Chat() {
         id: (Date.now() + 1).toString(),
         content:
           EXAMPLE_RESPONSES[
-            Math.floor(Math.random() * EXAMPLE_RESPONSES.length)
+          Math.floor(Math.random() * EXAMPLE_RESPONSES.length)
           ],
         role: "assistant",
         timestamp: new Date(),

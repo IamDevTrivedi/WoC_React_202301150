@@ -1,5 +1,6 @@
 import React from "react";
 import { Bot, User, Copy } from "lucide-react";
+import { message as msg } from 'antd';
 
 export function ChatMessage({ message }) {
   const isAssistant = message.role === "assistant";
@@ -7,7 +8,7 @@ export function ChatMessage({ message }) {
   // Function to copy the message content to clipboard
   const handleCopy = () => {
     navigator.clipboard.writeText(message.content);
-    message.success("Message copied to clipboard");
+    msg.success("Copied to Clipboard");
   };
 
   return (
@@ -15,15 +16,13 @@ export function ChatMessage({ message }) {
       className={`flex ${isAssistant ? "justify-start" : "justify-end"} my-4`}
     >
       <div
-        className={`flex items-start gap-4 ${
-          isAssistant ? "flex-row" : "flex-row-reverse"
-        }`}
+        className={`flex items-start gap-4 ${isAssistant ? "flex-row" : "flex-row-reverse"
+          }`}
       >
         {/* Avatar */}
         <div
-          className={`flex h-10 w-10 shrink-0 select-none items-center justify-center rounded-md shadow-md ${
-            isAssistant ? "bg-neutral-800" : "bg-indigo-600"
-          }`}
+          className={`flex h-10 w-10 shrink-0 select-none items-center justify-center rounded-md shadow-md ${isAssistant ? "bg-neutral-800" : "bg-indigo-600"
+            }`}
         >
           {isAssistant ? (
             <Bot className="h-5 w-5 text-neutral-200" />
@@ -34,11 +33,10 @@ export function ChatMessage({ message }) {
 
         {/* Message Bubble */}
         <div
-          className={`group relative max-w-2xl flex-1 rounded-xl px-4 py-3 shadow-lg transition-all ${
-            isAssistant
-              ? "bg-neutral-950/70 border border-neutral-800 text-neutral-100 rounded-tl-none"
-              : "bg-gradient-to-br bg-blue-900/30 border border-blue-800 rounded-tr-none backdrop-blur-sm text-neutral-50"
-          }`}
+          className={`group relative max-w-2xl flex-1 rounded-xl px-4 py-3 shadow-lg transition-all ${isAssistant
+            ? "bg-neutral-950/70 border border-neutral-800 text-neutral-100 rounded-tl-none"
+            : "bg-gradient-to-br bg-blue-900/30 border border-blue-800 rounded-tr-none backdrop-blur-sm text-neutral-50"
+            }`}
         >
           <p className="prose prose-invert break-words">{message.content}</p>
 
