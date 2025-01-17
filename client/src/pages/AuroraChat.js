@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
-import { ChatMessage } from "../components/ChatMessage";
-import { ChatInput } from "../components/ChatInput";
-import { LoadingDots } from "../components/LoadingDots";
+import { ChatMessage } from "../components/ChatMessage.js";
+import { ChatInput } from "../components/ChatInput.js";
+import { LoadingDots } from "../components/LoadingDots.js";
 import { message } from 'antd';
-import { AppContext } from "../Context/AppContext";
+import { AppContext } from "../Context/AppContext.js";
+import ChatHeader from "../components/ChatHeader.js";
 
-function Chat() {
+function AuroraChat() {
 
   const [state, setState] = useState({
     messages: [],
@@ -102,28 +103,15 @@ function Chat() {
     }
   };
 
+
+  document.title = "Ask Aurora | Your Personal Assistant | EditFlow | Enhance Your Coding Experience";
+
   return (
 
     <div className="flex min-h-screen flex-col bg-black text-white">
-      {/* Fixed header with blur effect */}
-      <header className="sticky top-0 z-10 border-b border-neutral-800 bg-black/80 backdrop-blur-md shadow-md">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-          {/* Logo and title */}
-          <div className="flex items-center gap-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-600 text-white font-bold shadow-lg">
-              AI
-            </div>
-            <h1 className="text-xl font-bold text-neutral-100 tracking-wide">
-              Ask AI
-            </h1>
-          </div>
 
-          {/* Responsive subtitle */}
-          <h2 className="hidden md:block text-sm font-medium text-neutral-400">
-            Get answers, insights, and everything you need!
-          </h2>
-        </div>
-      </header>
+
+      <ChatHeader />
 
       {/* Scrollable chat area */}
       <main className="flex-1 overflow-y-auto">
@@ -164,4 +152,4 @@ function Chat() {
   );
 }
 
-export default Chat;
+export default AuroraChat;

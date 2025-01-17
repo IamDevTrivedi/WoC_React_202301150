@@ -52,6 +52,12 @@ export function Navbar({ className }) {
                         >
                             Open Dashboard
                         </HoveredLink>
+                        <HoveredLink
+                            href="/aurora"
+                            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-xs md:text-base"
+                        >
+                            Ask Aurora
+                        </HoveredLink>
                     </div>
                 </MenuItem>
 

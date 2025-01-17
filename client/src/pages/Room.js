@@ -5,6 +5,9 @@ import Footer from '../components/Footer.js'
 import { GlobeDemo } from '../components/GitGlobe.js'
 
 export default function Room() {
+
+  document.title = "Create or Join Rooms | Collaborate with Teammates and Enhance Coding Experience";
+
   return (
     <div className='bg-black'>
 

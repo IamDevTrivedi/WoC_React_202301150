@@ -308,6 +308,7 @@ export default function CodeRoom() {
     }
 
 
+    document.title = `${roomState.name || 'Code Room'} | EditFlow | Enhance Your Coding Experience`;
 
 
     if (isMobileDevice) {

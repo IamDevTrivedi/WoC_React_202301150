@@ -17,7 +17,7 @@ import CreateRoom from './pages/CreateRoom.js'
 import JoinRoom from './pages/JoinRoom.js'
 import CodeRoom from './pages/CodeRoom.js'
 import Privacy from './pages/Privacy.js'
-import Chat from './pages/Chat.js'
+import AuroraChat from './pages/AuroraChat.js'
 
 export default function App() {
 
@@ -75,7 +75,7 @@ export default function App() {
 
 
         {/* Ask AI routes */}
-        <Route path="/ask-ai" element={<Chat/>} />
+        <Route path="/aurora" element={<AuroraChat />} />
 
 
 
