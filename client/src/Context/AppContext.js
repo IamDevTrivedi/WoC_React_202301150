@@ -365,11 +365,14 @@ export const AppContextProvider = ({ children }) => {
     }
 
     // #region Ask Regular Question Function
-    const askRegularQuestion = async ({ question }) => {
+    const askRegularQuestion = async ({ question, history }) => {
 
         try {
+
+
             const { data } = await axiosInstance.post('/api/gemini/ask-regular', {
-                question
+                question,
+                history
             });
 
             if (data.success) {

@@ -9,22 +9,24 @@ const logger = require('../lib/logger.lib');
 const Code = require('../models/code.model');
 
 const geminiController = {
+
     getRegularResponse: async (req, res) => {
 
         logger.post("/api/gemini/ask-regular");
 
         try {
-            const { question } = req.body;
-            const chat = await initializeExpertChat();
+            const { question, history } = req.body;
+            const chat = await initializeExpertChat(history);
             const result = await chat.sendMessage(question);
             const response = result.response.text();
+
 
             return res.status(200).json({
                 success: true,
                 message: 'Response generated successfully',
                 response
             });
-            
+
         } catch (error) {
             logger.error("Regular response error:", error);
             return res.status(500).json({
@@ -129,7 +131,7 @@ const geminiController = {
 };
 
 
-async function initializeExpertChat() {
+async function initializeExpertChat(history) {
     return model.startChat({
         history: [
             {
@@ -154,7 +156,8 @@ async function initializeExpertChat() {
                                 - Implementation strategies
                           What would you like to discuss ?`
                 }],
-            }
+            },
+            ...history
         ]
     });
 }
