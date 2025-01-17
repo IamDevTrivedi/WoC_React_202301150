@@ -29,6 +29,7 @@ const healthRoutes = require('./routes/heath.router');
 const authRoutes = require('./routes/auth.router.js');
 const userRoutes = require('./routes/user.router.js');
 const roomRoutes = require('./routes/room.router.js');
+const geminiRoutes = require('./routes/gemini.router.js');
 
 // Import socket logic
 
@@ -68,6 +69,7 @@ app.use("/api/health", healthRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/room", roomRoutes);
+app.use("/api/gemini", geminiRoutes);
 
 // Backend Self Ping: to keep the server warm on render
 setInterval(async () => {

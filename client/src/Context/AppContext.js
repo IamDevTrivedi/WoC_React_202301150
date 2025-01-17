@@ -364,6 +364,30 @@ export const AppContextProvider = ({ children }) => {
         }
     }
 
+    // #region Ask Regular Question Function
+    const askRegularQuestion = async ({ question }) => {
+
+        try {
+            const { data } = await axiosInstance.post('/api/gemini/ask-regular', {
+                question
+            });
+
+            if (data.success) {
+                return data.response;
+            }
+            else {
+                message.error(data.message);
+                return null;
+            }
+
+        } catch (error) {
+            const errorMessage = error.response?.data?.message || error.message || 'An error occurred. Please try again later.';
+            message.error(errorMessage);
+            return null;
+        }
+
+    }
+
 
     // #region Context Provider
     const value = {
@@ -390,7 +414,9 @@ export const AppContextProvider = ({ children }) => {
         createRoom,
         joinRoom,
         leaveRoom,
-        getRoomData
+        getRoomData,
+
+        askRegularQuestion
     }
 
     return (

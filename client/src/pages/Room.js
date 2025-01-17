@@ -16,20 +16,16 @@ export default function Room() {
 
       <div className='bg-black mx-auto flex items-center justify-center min-h-screen flex-col md:flex-row max-w-4xl'>
         <AnimatedPinDemo
-
           href="/room/create"
           title="Create a Room"
           name="Create a Room"
-          description="Create a room to host a movie night with your friends!"
-
-
+          description="Create an epic room to code and conquer challenges with your teammates!"
         />
         <AnimatedPinDemo
-
           href="/room/join"
           title="Join a Room"
           name="Join a Room"
-          description="Join a room to watch movies with your friends"
+          description="Join an exciting room to collaborate and code with your teammates!"
         />
       </div>
 

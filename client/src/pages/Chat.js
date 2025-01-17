@@ -1,19 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { ChatMessage } from "../components/ChatMessage";
 import { ChatInput } from "../components/ChatInput";
 import { LoadingDots } from "../components/LoadingDots";
 import { message } from 'antd';
+import { AppContext } from "../Context/AppContext";
 
-// Simulated API response delay
-const RESPONSE_DELAY = 1000;
-
-// Example responses for demonstration
-const EXAMPLE_RESPONSES = [
-  "I'd be happy to help you with that!",
-  "That's an interesting question. Let me explain...",
-  "Here's what I think about that...",
-  "Based on my understanding...",
-];
 
 function Chat() {
   const [state, setState] = useState({
@@ -23,6 +14,8 @@ function Chat() {
   });
 
   const messagesEndRef = useRef(null);
+
+  const { askRegularQuestion } = useContext(AppContext);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -49,24 +42,25 @@ function Chat() {
       isLoading: true,
     }));
 
-    // Simulate API call
-    setTimeout(() => {
-      const assistantMessage = {
-        id: (Date.now() + 1).toString(),
-        content:
-          EXAMPLE_RESPONSES[
-          Math.floor(Math.random() * EXAMPLE_RESPONSES.length)
-          ],
-        role: "assistant",
-        timestamp: new Date(),
-      };
 
-      setState((prev) => ({
-        ...prev,
-        messages: [...prev.messages, assistantMessage],
-        isLoading: false,
-      }));
-    }, RESPONSE_DELAY);
+    const response = await askRegularQuestion({
+      question: state.input.trim()
+    });
+
+    const assistantMessage = {
+      id: (Date.now() + 1).toString(),
+      content: response || "Sorry, I couldn't get that. Can you please try again?",
+      role: "assistant",
+      timestamp: new Date(),
+    };
+
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, assistantMessage],
+      isLoading: false,
+    }));
+
   };
 
   return (
