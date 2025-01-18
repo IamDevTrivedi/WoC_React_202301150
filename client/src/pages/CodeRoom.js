@@ -289,8 +289,7 @@ export default function CodeRoom() {
 
 
     // format the code of the editor
-    const handleCodeFormat = () => {
-        // TODO: this feature is not implemented yet
+    const handleCodeFormat = () => {        
     }
 
 
