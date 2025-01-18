@@ -1,73 +1,37 @@
-import React, { useState, useRef } from 'react';
+import React, { useContext } from 'react';
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import {
-    Code2,
-    Palette,
-    Languages,
-    FileUp,
-    FileDown,
-    Play,
-    AlignCenter,
-    WrapText,
-    Bot,
-    ChevronLeft,
-    ChevronRight,
-    Type,
-    FileInput
-} from 'lucide-react';
+import { Palette, Languages, FileUp, Check, FileDown, Play, AlignCenter, WrapText, Bot, ChevronLeft, ChevronRight, Type, FileInput } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+import availableFontSize from '../Constants/availableFontSize';
+import themeNames from '../Constants/themeNames';
+import languages from '../Constants/languages';
+
+import { EditorContext } from '../Context/EditorTryContext';
+
 
 const EditorSidebar = () => {
 
-    const availableFontSize = [8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32];
-    const [collapsed, setCollapsed] = useState(false);
-    const [fontSize, setFontSize] = useState(14);
-    const uploadCodeRef = useRef(null);
-    const uploadInputRef = useRef(null);
-
-    const handleFileUpload = (type, event) => {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const content = e.target.result;
-            // Handle the file content based on type
-            console.log(`${type} content:`, content);
-            // You can add your file handling logic here
-        };
-        reader.readAsText(file);
-    };
-
-    const handleDownloadCode = () => {
-        // Add your code download logic here
-        const content = "Your code content here";
-        const blob = new Blob([content], { type: 'text/plain' });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'code.txt';
-        a.click();
-        window.URL.revokeObjectURL(url);
-    };
+    const { editorState, setEditorState, handleDownloadCode, setComplierState, handleRunCode, isSideBarOpen, setIsSideBarOpen, handleFormatCode, handleFontSizeChange, handleWordWrapChange, handleLanguageChange, handleThemeChange } = useContext(EditorContext);
 
     return (
         <div className="min-h-screen bg-black text-gray-50">
+
             <Sidebar
-                collapsed={collapsed}
+                collapsed={!isSideBarOpen}
                 backgroundColor="rgb(0, 0, 0)"
                 className="h-full border-r border-neutral-900"
             >
                 {/* Header */}
                 <div className="p-4 flex items-center justify-between border-b border-neutral-900">
-                    <Link to="/" className={`text-white text-2xl font-semibold ${collapsed ? 'hidden' : 'block'}`}>
+                    <Link to="/" className={`text-white text-2xl font-semibold ${!isSideBarOpen ? 'hidden' : 'block'}`}>
                         EditFlow
                     </Link>
                     <button
-                        onClick={() => setCollapsed(!collapsed)}
+                        onClick={() => setIsSideBarOpen(!isSideBarOpen)}
                         className="p-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-950 transition-colors"
                     >
-                        {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+                        {isSideBarOpen ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
                     </button>
                 </div>
 
@@ -83,80 +47,200 @@ const EditorSidebar = () => {
                         }
                     }}
                 >
+
+
                     {/* Primary Actions */}
                     <MenuItem
                         icon={<Play size={20} />}
                         className="text-blue-700 hover:text-blue-800"
+                        onClick={handleRunCode}
                     >
                         Run Code
                     </MenuItem>
-                    <MenuItem icon={<AlignCenter size={20} />}>
+
+
+                    <MenuItem
+                        icon={<AlignCenter size={20} />}
+                        onClick={handleFormatCode}
+                    >
                         Format Code
                     </MenuItem>
-                    <MenuItem icon={<WrapText size={20} />}>
+
+                    <MenuItem
+                        icon={<WrapText size={20} />}
+                        onClick={() => handleWordWrapChange(!editorState.isWordWrap)}
+                    >
                         Word Wrap
                     </MenuItem>
-                    <MenuItem icon={<Bot size={20} />}>
+
+                    <MenuItem
+                        icon={<Bot size={20} />}>
                         Ask AI
                     </MenuItem>
+
 
                     <div className="border-t border-neutral-900 my-4"></div>
 
                     {/* File Operations */}
                     <MenuItem
                         icon={<FileUp size={20} />}
-                        onClick={() => uploadCodeRef.current?.click()}
+                        onClick={() => {
+                            document.getElementById("upload-code").click();
+                        }}
                     >
                         Upload Code
                         <input
-                            ref={uploadCodeRef}
+                            id="upload-code"
                             type="file"
-                            accept=".txt,.js,.py,.java,.cpp"
-                            className="hidden"
-                            onChange={(e) => handleFileUpload('code', e)}
+                            style={{ display: "none" }}
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                    const reader = new FileReader();
+
+                                    reader.onload = (event) => {
+                                        const content = event.target?.result;
+                                        if (typeof content === "string") {
+                                            setEditorState((prev) => ({
+                                                ...prev,
+                                                codeContent: content,
+                                            }));
+
+                                            console.log("File content read successfully.");
+
+                                        } else {
+                                            console.error("Failed to read file content.");
+                                        }
+                                    };
+
+                                    reader.onerror = () => {
+                                        console.error("Error reading the file:", reader.error);
+                                    };
+
+                                    reader.readAsText(file);
+                                } else {
+                                    console.warn("No file selected.");
+                                }
+                            }}
                         />
                     </MenuItem>
+
+
                     <MenuItem
                         icon={<FileDown size={20} />}
-                        onClick={handleDownloadCode}
+                        onClick={() => {
+                            handleDownloadCode();
+                            console.log('Download code');
+                        }}
                     >
                         Download Code
                     </MenuItem>
+
+
                     <MenuItem
                         icon={<FileInput size={20} />}
-                        onClick={() => uploadInputRef.current?.click()}
+                        onClick={() => {
+
+                            const fileInput = document.getElementById("upload-input");
+                            if (fileInput) {
+                                fileInput.click();
+                            } else {
+                                console.error("File input element not found.");
+                            }
+                        }}
                     >
                         Upload Input
                         <input
-                            ref={uploadInputRef}
+                            id="upload-input"
                             type="file"
                             accept=".txt"
-                            className="hidden"
-                            onChange={(e) => handleFileUpload('input', e)}
+                            style={{ display: "none" }}
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+
+                                    const reader = new FileReader();
+
+                                    reader.onload = (event) => {
+                                        const content = event.target?.result;
+                                        if (typeof content === "string") {
+                                            setComplierState((prev) => ({
+                                                ...prev,
+                                                input: content
+                                            }));
+                                        } else {
+                                            console.error("Failed to read file content.");
+                                        }
+                                    };
+
+                                    reader.onerror = () => {
+                                        console.error("Error reading the file:", reader.error);
+                                    };
+
+                                    reader.readAsText(file);
+                                } else {
+                                    console.warn("No file selected.");
+                                }
+                            }}
                         />
                     </MenuItem>
+
 
                     <div className="border-t border-neutral-900 my-4"></div>
 
                     {/* Settings */}
+
+
                     <SubMenu
                         label="Theme"
                         icon={<Palette size={20} />}
                     >
-                        <MenuItem className="bg-black hover:bg-neutral-900">Light</MenuItem>
-                        <MenuItem className="bg-black hover:bg-neutral-900">Dark</MenuItem>
-                        <MenuItem className="bg-black hover:bg-neutral-900">System</MenuItem>
+                        {themeNames.map((theme) => (
+                            <MenuItem
+                                key={theme}
+                                className="bg-black hover:bg-neutral-900"
+                                onClick={() => handleThemeChange(theme)}
+                            >
+
+                                {editorState.theme === theme ? (
+                                    <span className="font-semibold text-white flex items-center gap-1">
+                                        <span>{theme}</span> <Check size={20} />
+                                    </span>
+                                ) : (
+                                    theme
+                                )}
+
+
+                            </MenuItem>
+                        ))}
                     </SubMenu>
+
+
 
                     <SubMenu
                         label="Language"
                         icon={<Languages size={20} />}
                     >
-                        <MenuItem className="bg-black hover:bg-neutral-900">JavaScript</MenuItem>
-                        <MenuItem className="bg-black hover:bg-neutral-900">Python</MenuItem>
-                        <MenuItem className="bg-black hover:bg-neutral-900">Java</MenuItem>
-                        <MenuItem className="bg-black hover:bg-neutral-900">C++</MenuItem>
+                        {languages.map((lang) => (
+                            <MenuItem
+                                key={lang.editorLanguage}
+                                className="bg-black hover:bg-neutral-900"
+                                onClick={() => handleLanguageChange(lang.editorLanguage)}
+                            >
+                                {editorState.language === lang.editorLanguage ? (
+                                    <span className="font-semibold text-white flex items-center gap-1">
+                                        <span>{lang.roomLanguage}</span> <Check size={20} />
+                                    </span>
+                                ) : (
+                                    lang.roomLanguage
+                                )}
+                            </MenuItem>
+                        ))}
+
                     </SubMenu>
+
+
+
 
                     <SubMenu
                         label="Font Size"
@@ -166,16 +250,30 @@ const EditorSidebar = () => {
                             <MenuItem
                                 key={size}
                                 className="bg-black hover:bg-neutral-900"
-                                onClick={() => setFontSize(size)}
+                                onClick={() => handleFontSizeChange(size)}
                             >
-                                {size}
+                                {
+                                    editorState.fontSize === size ? (
+                                        <span className="font-semibold text-white flex items-center gap-1">
+                                            <span>{size}</span> <Check size={20} />
+                                        </span>
+                                    ) : (
+                                        size
+                                    )
+                                }
                             </MenuItem>
                         ))}
                     </SubMenu>
+
+
+
+
                 </Menu>
             </Sidebar>
-        </div>
+        </div >
     );
 };
+
+
 
 export default EditorSidebar;
