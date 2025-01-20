@@ -1,6 +1,6 @@
 import React, { createContext, useRef, useState } from 'react';
 import languages from '../Constants/languages';
-
+import { useMonaco } from '@monaco-editor/react';
 
 const EditorContext = createContext();
 
@@ -19,14 +19,16 @@ const EditorTryProvider = ({ children }) => {
 
     const [complierState, setComplierState] = useState({
         language: 'javascript',
-        output: '',
-        error: ''
+        output: 'No output generated',
+        error: '',
+        isCompiling: false
     });
 
 
     const [isSideBarOpen, setIsSideBarOpen] = useState(true);
-
     const monacoRef = useRef(null);
+
+
 
     const handleFontSizeChange = (size) => {
         setEditorState((prev) => ({
@@ -54,19 +56,40 @@ const EditorTryProvider = ({ children }) => {
 
     }
 
-    const handleThemeChange = (theme) => {
-        setEditorState((prev) => ({
-            ...prev,
-            theme: theme
-        }));
+    const monaco = useMonaco();
+    const handleThemeChange = async (theme) => {
+        try {
+            // Update editor state with the new theme
+            setEditorState((prev) => ({
+                ...prev,
+                theme: theme
+            }));
 
-        fetch(`../Constants/monaco-themes-master/${theme}.json`)
-            .then(data => data.json())
-            .then(data => {
-                monacoRef?.current.editor.defineTheme(theme, data);
-                monacoRef?.current.editor.setTheme(theme);
-            })
-    }
+
+            console.log('theme:', theme);
+
+            // Fetch the theme configuration JSON
+            console.log(`Fetching theme from: ../Constants/monaco-themes-master/${theme}.json`);
+            const response = await fetch(`../Constants/monaco-themes-master/${theme}.json`);
+
+            if (!response.ok) {
+                throw new Error('Failed to load theme');
+            }
+
+            const themeData = await response.json();
+
+            // Ensure Monaco editor is available before defining the theme
+            if (monaco.editor) {
+                monaco.editor.defineTheme("theme", themeData);
+                monaco.editor.setTheme("theme");
+            } else {
+                console.error('Monaco editor instance is not available');
+            }
+        } catch (error) {
+            console.error('Error while changing theme:', error);
+        }
+    };
+
 
 
     const handleWordWrapChange = (isWordWrap) => {
@@ -97,7 +120,7 @@ const EditorTryProvider = ({ children }) => {
 
 
         try {
-            setComplierState(prev => ({ ...prev, error: null }));
+            setComplierState(prev => ({ ...prev, error: null, isCompiling: true }));
 
             const compilerOptions = {
 
@@ -142,7 +165,7 @@ const EditorTryProvider = ({ children }) => {
             }));
         }
         finally {
-            setComplierState(prev => ({ ...prev, isCompiling: false }));
+            setComplierState(prev => ({ ...prev, isCompiling: false, error: null }));
         }
     }
 

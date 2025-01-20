@@ -12,7 +12,7 @@ import { EditorContext } from '../Context/EditorTryContext';
 
 const EditorSidebar = () => {
 
-    const { editorState, setEditorState, handleDownloadCode, setComplierState, handleRunCode, isSideBarOpen, setIsSideBarOpen, handleFormatCode, handleFontSizeChange, handleWordWrapChange, handleLanguageChange, handleThemeChange } = useContext(EditorContext);
+    const { complierState, editorState, setEditorState, handleDownloadCode, setComplierState, handleRunCode, isSideBarOpen, setIsSideBarOpen, handleFormatCode, handleFontSizeChange, handleWordWrapChange, handleLanguageChange, handleThemeChange } = useContext(EditorContext);
 
     return (
         <div className="min-h-screen bg-black text-gray-50">
@@ -52,10 +52,11 @@ const EditorSidebar = () => {
                     {/* Primary Actions */}
                     <MenuItem
                         icon={<Play size={20} />}
-                        className="text-blue-700 hover:text-blue-800"
+                        className={`text-blue-700 hover:text-blue-800 ${complierState.isCompiling ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                         onClick={handleRunCode}
+                        disabled={complierState.isCompiling}
                     >
-                        Run Code
+                        {complierState.isCompiling ? "Compiling..." : "Run Code"}
                     </MenuItem>
 
 
@@ -70,7 +71,7 @@ const EditorSidebar = () => {
                         icon={<WrapText size={20} />}
                         onClick={() => handleWordWrapChange(!editorState.isWordWrap)}
                     >
-                        Word Wrap
+                        {editorState.isWordWrap ? "Disable Word Wrap" : "Enable Word Wrap"}
                     </MenuItem>
 
                     <MenuItem

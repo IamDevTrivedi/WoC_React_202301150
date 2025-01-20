@@ -1,4 +1,6 @@
 const themeNames = [
+    "vs-dark" , 
+    "vs-light" ,
     'Active4D',
     'All Hallows Eve',
     'Amy',
