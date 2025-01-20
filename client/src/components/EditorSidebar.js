@@ -1,7 +1,8 @@
 import React, { useContext } from 'react';
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import { Palette, Languages, FileUp, Check, FileDown, Play, AlignCenter, WrapText, Bot, ChevronLeft, ChevronRight, Type, FileInput } from 'lucide-react';
+import { Palette, Languages, FileUp, Check, FileDown, Play, AlignCenter, WrapText, Bot, ChevronLeft, ChevronRight, Type, FileInput, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { message } from "antd";
 
 import availableFontSize from '../Constants/availableFontSize';
 import themeNames from '../Constants/themeNames';
@@ -200,17 +201,33 @@ const EditorSidebar = () => {
                             <MenuItem
                                 key={theme}
                                 className="bg-black hover:bg-neutral-900"
-                                onClick={() => handleThemeChange(theme)}
+                                onClick={() => {
+                                    if (theme === 'vs-light' || theme === 'vs-dark') {
+                                        handleThemeChange(theme);
+                                    } else {
+                                        message.error('This theme is locked');
+                                    }
+                                }}
                             >
 
-                                {editorState.theme === theme ? (
-                                    <span className="font-semibold text-white flex items-center gap-1">
-                                        <span>{theme}</span> <Check size={20} />
-                                    </span>
-                                ) : (
-                                    theme
-                                )}
-
+                                {
+                                    /** only vs-dark and vs-light should be selectable 
+                                     * all other should be locked [icons like lock with cursor disabled]
+                                     */
+                                    editorState.theme === theme ? (
+                                        <span className='text-white flex gap-1 items-center text-center'>
+                                            {theme} <Check size={20} /> {/* Show checkmark for selected theme */}
+                                        </span>
+                                    ) : (editorState.theme === 'vs-light' || editorState.theme === 'vs-dark') ? (
+                                        <span className='cursor-pointer'>
+                                            {theme}
+                                        </span>
+                                    ) : (
+                                        <span className='cursor-not-allowed'>
+                                            {theme} <Lock size={20} /> {/* Show lock for non-selectable themes */}
+                                        </span>
+                                    )
+                                }
 
                             </MenuItem>
                         ))}
@@ -274,6 +291,7 @@ const EditorSidebar = () => {
         </div >
     );
 };
+
 
 
 

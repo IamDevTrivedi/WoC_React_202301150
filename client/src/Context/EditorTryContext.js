@@ -7,7 +7,7 @@ const EditorContext = createContext();
 const EditorTryProvider = ({ children }) => {
 
     const [editorState, setEditorState] = useState({
-        theme: 'Active4D',
+        theme: 'vs-dark',
         language: 'javascript',
         codeContent: 'console.log("Hello World")',
         input: '',
