@@ -27,7 +27,7 @@ const EditorSidebar = () => {
   return (
     <Sidebar
       collapsed={collapsed}
-      backgroundColor="rgb(0, 0, 0)"
+      backgroundColor="#1f1e1e"
       className="h-[calc(100vh-47px)] bg-neutral-800 text-gray-50 overflow-y-hidden"
     >
       {/* Header */}
