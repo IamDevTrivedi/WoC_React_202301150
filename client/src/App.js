@@ -19,6 +19,7 @@ import Privacy from './pages/Privacy.js'
 import AuroraChat from './pages/AuroraChat.js'
 import NotFound from './pages/NotFound.js'
 import EditorTry from './pages/EditorTry.js'
+import Editor from './pages/Editor.js'
 
 export default function App() {
 
@@ -82,6 +83,7 @@ export default function App() {
 
         {/* Editor Demo routes */}
         <Route path="/editor-demo" element={< EditorTry /> } />
+        <Route path="/editor" element={< Editor /> } />
 
 
 

@@ -47,10 +47,10 @@ export function Navbar({ className }) {
                             Go to Rooms
                         </HoveredLink>
                         <HoveredLink
-                            href="/dashboard"
+                            href="/editor"
                             className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors text-xs md:text-base"
                         >
-                            Open Dashboard
+                            Open Editor
                         </HoveredLink>
                         <HoveredLink
                             href="/aurora"
@@ -67,10 +67,10 @@ export function Navbar({ className }) {
 
                         <>
                             <HoveredLink
-                                href="/dashboard"
+                                href="/editor"
                                 className="text-xs md:text-base text-neutral-700 hover:text-black transition-colors"
                             >
-                                Dashboard
+                                Editor
                             </HoveredLink>
                             <div onClick={logout}>
                                 <HoveredLink

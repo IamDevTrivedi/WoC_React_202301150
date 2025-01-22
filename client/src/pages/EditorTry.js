@@ -1,4 +1,4 @@
-import EditorSidebar from '../components/EditorSidebar';
+import EditorSidebar from '../components/EditorTrySidebar';
 import CodeEditorDemo from '../components/CodeEditorDemo.js';
 
 
