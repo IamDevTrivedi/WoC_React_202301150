@@ -1,10 +1,4 @@
-
-
-
-==> renaming all the components to get rid of this peice of SHIT 
-
-
-==> editor/demo : resize from lef to right is not working 
+==> editor/demo : resize from lef to right is not working
 
 ==> rooms : upon leave of the admin , the others are getting errors 
 

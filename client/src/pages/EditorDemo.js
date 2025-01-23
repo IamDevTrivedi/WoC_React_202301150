@@ -2,7 +2,7 @@ import EditorSidebarForDemo from '../components/EditorSidebarForDemo.js';
 import CodeEditorForDemo from '../components/CodeEditorForDemo.js';
 
 
-const EditorTry = () => {
+const EditorDemo = () => {
     return (
         <div className="flex overflow-hidden">
             <EditorSidebarForDemo />
@@ -14,4 +14,4 @@ const EditorTry = () => {
 };
 
 
-export default EditorTry;
+export default EditorDemo;

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { Palette, Languages, FileUp, Check, FileDown, Play, AlignCenter, WrapText, Bot, ChevronLeft, ChevronRight, Type, FileInput, Lock } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { message } from "antd";
 
 import availableFontSize from '../Constants/availableFontSize';
@@ -15,8 +15,12 @@ const EditorSidebarForDemo = () => {
 
     const { complierState, editorState, setEditorState, handleDownloadCode, setComplierState, handleRunCode, isSideBarOpen, setIsSideBarOpen, handleFormatCode, handleFontSizeChange, handleWordWrapChange, handleLanguageChange, handleThemeChange } = useContext(EditorContext);
 
+    const navigate = useNavigate();
+
+    document.title = "Try Now | EditFlow";
+
     return (
-        <div className="min-h-screen bg-black text-gray-50">
+        <div className="h-screen bg-black text-gray-50">
 
             <Sidebar
                 collapsed={!isSideBarOpen}
@@ -76,14 +80,16 @@ const EditorSidebarForDemo = () => {
                     </MenuItem>
 
                     <MenuItem
-                        icon={<Bot size={20} />}>
+                        icon={<Bot size={20} />}
+                        onClick={() => navigate('/aurora')}
+                    >
                         Ask AI
                     </MenuItem>
 
 
                     <div className="border-t border-neutral-900 my-4"></div>
 
-                    {/* File Operations */}
+                    {/* //  TODO:  File Operations */}
                     <MenuItem
                         icon={<FileUp size={20} />}
                         onClick={() => {
@@ -103,12 +109,22 @@ const EditorSidebarForDemo = () => {
                                     reader.onload = (event) => {
                                         const content = event.target?.result;
                                         if (typeof content === "string") {
+
+                                            const extension = file.name.split(".");
+                                            console.log('extension:', extension);
+                                            const selectedLanguage = languages.find((lang) => lang.extension === "." + extension[1]);
+
                                             setEditorState((prev) => ({
                                                 ...prev,
                                                 codeContent: content,
+                                                language: selectedLanguage?.editorLanguage || "plaintext"
                                             }));
 
-                                            console.log("File content read successfully.");
+                                            setComplierState((prev) => ({
+                                                ...prev,
+                                                language: selectedLanguage?.codeLanguage || "plaintext"
+                                            }));
+
 
                                         } else {
                                             console.error("Failed to read file content.");
@@ -192,7 +208,6 @@ const EditorSidebarForDemo = () => {
 
                     {/* Settings */}
 
-
                     <SubMenu
                         label="Theme"
                         icon={<Palette size={20} />}
@@ -202,33 +217,31 @@ const EditorSidebarForDemo = () => {
                                 key={theme}
                                 className="bg-black hover:bg-neutral-900"
                                 onClick={() => {
+                                    // Only allow VS light and dark themes to be selected
                                     if (theme === 'vs-light' || theme === 'vs-dark') {
                                         handleThemeChange(theme);
                                     } else {
-                                        message.error('This theme is locked');
+                                        message.info('This theme is locked. Login to unlock this theme');
                                     }
                                 }}
                             >
-
-                                {
-                                    /** only vs-dark and vs-light should be selectable 
-                                     * all other should be locked [icons like lock with cursor disabled]
-                                     */
-                                    editorState.theme === theme ? (
-                                        <span className='text-white flex gap-1 items-center text-center'>
-                                            {theme} <Check size={20} /> {/* Show checkmark for selected theme */}
-                                        </span>
-                                    ) : (editorState.theme === 'vs-light' || editorState.theme === 'vs-dark') ? (
-                                        <span className='cursor-pointer'>
-                                            {theme}
-                                        </span>
-                                    ) : (
-                                        <span className='cursor-not-allowed'>
-                                            {theme} <Lock size={20} /> {/* Show lock for non-selectable themes */}
-                                        </span>
-                                    )
-                                }
-
+                                {/* Render theme with appropriate icon based on selection and locked status */}
+                                {theme === editorState.theme ? (
+                                    // Currently selected theme
+                                    <span className='text-white flex gap-2 items-center'>
+                                        {theme} <Check size={20} />
+                                    </span>
+                                ) : (theme === 'vs-light' || theme === 'vs-dark') ? (
+                                    // Selectable themes
+                                    <span className='cursor-pointer'>
+                                        {theme}
+                                    </span>
+                                ) : (
+                                    // Locked themes
+                                    <span className='cursor-not-allowed flex items-center gap-2 '>
+                                        {theme} <Lock size={15} />
+                                    </span>
+                                )}
                             </MenuItem>
                         ))}
                     </SubMenu>

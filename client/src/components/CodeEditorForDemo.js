@@ -3,6 +3,7 @@ import Editor from "@monaco-editor/react"
 import Split from "react-split"
 import { EditorContext } from "../Context/EditorTryContext"
 import { message } from "antd"
+import languages from "../Constants/languages"
 
 export default function CodeEditorForDemo() {
   const [mounted, setMounted] = useState(false)
@@ -60,15 +61,25 @@ export default function CodeEditorForDemo() {
     <div className="h-screen w-full overflow-hidden bg-neutral-950">
       <Split
         direction="vertical"
-         sizes={[60, 40]}
-         minSize={100}
+        sizes={[60, 40]}
+        minSize={100}
         gutterSize={8}
         className="flex flex-col h-full split-wrapper"
-        style={{ height: "100%" }}
+        style={{
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          boxSizing: "border-box",
+        }}
+        cursor="row-resize"
       >
-        <div className="overflow-hidden rounded-md border border-[#404040]">
-          <div className="h-8 bg-[#2D2D2D] flex items-center px-4 border-b border-[#404040]">
+        <div
+          className="overflow-hidden rounded-md border border-[#404040]"
+          style={{ flexGrow: 1, flexShrink: 1 }}
+        >
+          <div className="h-8 bg-[#2D2D2D] flex items-center justify-between px-4 border-b border-[#404040]">
             <span className="text-gray-300 text-sm font-medium">Code Editor</span>
+            <span className="text-gray-300 text-sm font-medium">{languages.find(lang => lang.editorLanguage === editorState.language)?.roomLanguage}</span>
           </div>
           <Editor
             height="calc(100% - 32px)"
@@ -98,9 +109,24 @@ export default function CodeEditorForDemo() {
           />
         </div>
 
-        <div className="overflow-hidden">
-          <Split sizes={[50, 50]} minSize={100} gutterSize={8} className="flex h-full" style={{ height: "100%" }}>
-            <div className="overflow-hidden flex flex-col rounded-md border border-[#404040]">
+        <div className="overflow-hidden" style={{ flexGrow: 1, flexShrink: 1 }}>
+          <Split
+            sizes={[50, 50]}
+            minSize={100}
+            gutterSize={8}
+            direction="horizontal"
+            className="flex h-full"
+            cursor="col-resize"
+            style={{
+              display: "flex",
+              height: "100%",
+              boxSizing: "border-box",
+            }}
+          >
+            <div
+              className="overflow-hidden flex flex-col rounded-md border border-[#404040]"
+              style={{ flexGrow: 1, flexShrink: 1 }}
+            >
               <div className="h-8 bg-[#2D2D2D] flex items-center justify-between px-4 border-b border-[#404040]">
                 <span className="text-gray-300 text-sm font-medium">Input</span>
                 <button
@@ -133,7 +159,10 @@ export default function CodeEditorForDemo() {
               />
             </div>
 
-            <div className="overflow-hidden flex flex-col rounded-md border border-[#404040]">
+            <div
+              className="overflow-hidden flex flex-col rounded-md border border-[#404040]"
+              style={{ flexGrow: 1, flexShrink: 1 }}
+            >
               <div className="h-8 bg-[#2D2D2D] flex items-center justify-between px-4 border-b border-[#404040]">
                 <span className="text-gray-300 text-sm font-medium">Output</span>
                 <div>
