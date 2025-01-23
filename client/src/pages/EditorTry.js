@@ -1,13 +1,13 @@
-import EditorSidebar from '../components/EditorTrySidebar';
-import CodeEditorDemo from '../components/CodeEditorDemo.js';
+import EditorSidebarForDemo from '../components/EditorSidebarForDemo.js';
+import CodeEditorForDemo from '../components/CodeEditorForDemo.js';
 
 
 const EditorTry = () => {
     return (
         <div className="flex overflow-hidden">
-            <EditorSidebar />
+            <EditorSidebarForDemo />
             <div className='flex-1 text-white bg-black'>
-                < CodeEditorDemo />
+                < CodeEditorForDemo />
             </div>
         </div>
     );

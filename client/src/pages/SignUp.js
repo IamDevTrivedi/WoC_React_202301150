@@ -3,7 +3,7 @@ import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { cn } from "../lib/utils";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../components/NavbarDemo";
+import Navbar from "../components/NavBarHome";
 import Footer from "../components/Footer";
 import { message } from "antd";
 import { AppContext } from "../Context/AppContext";
@@ -55,7 +55,7 @@ export function SignUp() {
     //     }
     // })
 
-    document.title = "Sign Up | EditFlow | Enhance Your Coding Experience";
+    document.title = "Sign Up | EditFlow";
 
     return (
 

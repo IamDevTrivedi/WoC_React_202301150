@@ -3,7 +3,7 @@ import { Input } from "../components/ui/input";
 import { cn } from "../lib/utils";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
-import Navbar from "../components/NavbarDemo";
+import Navbar from "../components/NavBarHome";
 import { useContext, useState } from "react";
 import languages from "../Constants/languages";
 import { message } from "antd";
@@ -57,7 +57,7 @@ function CreateRoom() {
 
     };
 
-    document.title = "Create Room | EditFlow | Enhance Your Coding Experience";
+    document.title = "Create Room | EditFlow";
 
     return (
         <>

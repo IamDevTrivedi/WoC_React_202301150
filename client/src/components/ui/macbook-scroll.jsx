@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import CodeBlockDemo from "../CodeBlockDemo";
+import CodeBlockUse from "../CodeBlockForHome.js";
 import { cn } from "../../lib/utils";
 import {
   IconBrightnessDown,
@@ -142,7 +142,7 @@ export const Lid = ({ scaleX, scaleY, rotate, translate, src }) => {
         className="h-96 w-[32rem] absolute inset-0 bg-[#010101] rounded-2xl p-2"
       >
         <div className="absolute inset-0 bg-[#272729] rounded-lg" />
-        <CodeBlockDemo />
+        <CodeBlockUse />
       </motion.div>
     </div>
   );

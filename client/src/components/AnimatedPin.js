@@ -1,7 +1,7 @@
 import React from "react";
 import { PinContainer } from "./ui/3d-pin";
 
-export function AnimatedPinDemo(props) {
+export function AnimatedPin(props) {
     return (
         (<div className="h-[40rem] w-full flex items-center justify-center ">
             <PinContainer title={props.title} href={props.href}>

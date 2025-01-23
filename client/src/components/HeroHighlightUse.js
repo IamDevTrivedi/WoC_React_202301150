@@ -4,7 +4,7 @@ import { PlayCircle, LogIn, UserPlus } from "lucide-react";
 import { IconTerminal2 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 
-export function HeroHighlightDemo() {
+export function HeroHighlightUse() {
     return (
         <HeroHighlight>
             {/* Animated Hero Heading */}

@@ -4,7 +4,7 @@ import React from "react";
 
 import { CodeBlock } from "./ui/code-block";
 
-export default function CodeBlockDemo() {
+export default function CodeBlockUse() {
     const code = `
 <div class="features-container">
   <h1>Why Choose EditFlow?</h1>

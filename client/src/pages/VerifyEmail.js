@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Input } from "../components/ui/input"
 import { Label } from "../components/ui/label"
-import Navbar from '../components/NavbarDemo'
+import Navbar from '../components/NavBarHome'
 import Footer from '../components/Footer'
 import { AppContext } from '../Context/AppContext'
 import { message } from "antd"
@@ -54,7 +54,7 @@ export default function VerifyEmail() {
         }
     })
 
-    document.title = "Verify Email | EditFlow | Enhance Your Coding Experience";
+    document.title = "Verify Email | EditFlow";
 
     return (
 

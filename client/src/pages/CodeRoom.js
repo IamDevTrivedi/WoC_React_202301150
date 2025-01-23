@@ -289,7 +289,7 @@ export default function CodeRoom() {
 
 
     // format the code of the editor
-    const handleCodeFormat = () => {        
+    const handleCodeFormat = () => {
     }
 
 
@@ -307,7 +307,7 @@ export default function CodeRoom() {
     }
 
 
-    document.title = `${roomState.name || 'Code Room'} | EditFlow | Enhance Your Coding Experience`;
+    document.title = `${roomState.name || 'Code Room'} | EditFlow`;
 
 
     if (isMobileDevice) {

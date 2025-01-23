@@ -3,7 +3,7 @@ import { MacbookScroll } from "./ui/macbook-scroll";
 import { Link } from "react-router-dom";
 
 
-export function MacbookScrollDemo() {
+export function MacbookScrollUse() {
     return (
         (<div className="overflow-hidden bg-black w-full">
             <MacbookScroll

@@ -104,7 +104,7 @@ function AuroraChat() {
   };
 
 
-  document.title = "Ask Aurora | Your Personal Assistant | EditFlow | Enhance Your Coding Experience";
+  document.title = "Ask Aurora | Your Personal Assistant | EditFlow";
 
   return (
 

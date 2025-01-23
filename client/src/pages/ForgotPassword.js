@@ -4,7 +4,7 @@ import { Input } from "../components/ui/input"
 import { Label } from "../components/ui/label"
 import { cn } from "../lib/utils"
 import { Link, useNavigate } from 'react-router-dom'
-import Navbar from '../components/NavbarDemo'
+import Navbar from '../components/NavBarHome'
 import Footer from '../components/Footer'
 import { AppContext } from '../Context/AppContext'
 import { message } from 'antd'
@@ -74,7 +74,7 @@ export default function ForgotPassword() {
     }
   }
 
-  document.title = "Reset Password | EditFlow | Enhance Your Coding Experience";
+  document.title = "Reset Password | EditFlow";
 
   return (
 

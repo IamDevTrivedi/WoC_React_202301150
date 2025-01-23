@@ -4,7 +4,7 @@ import Split from "react-split"
 import { EditorContext } from "../Context/EditorTryContext"
 import { message } from "antd"
 
-export default function CodeEditorDemo() {
+export default function CodeEditorForDemo() {
   const [mounted, setMounted] = useState(false)
   const { editorState, setEditorState, monacoRef, complierState, setComplierState } = useContext(EditorContext)
 
@@ -179,4 +179,3 @@ export default function CodeEditorDemo() {
     </div>
   )
 }
-

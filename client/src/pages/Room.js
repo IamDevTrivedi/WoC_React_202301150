@@ -1,6 +1,6 @@
 import React from 'react'
-import { AnimatedPinDemo } from '../components/AnimatedPinDemo.js'
-import Navbar from '../components/NavbarDemo.js'
+import { AnimatedPin } from '../components/AnimatedPin.js'
+import Navbar from '../components/NavBarHome.js'
 import Footer from '../components/Footer.js'
 import { GlobeDemo } from '../components/GitGlobe.js'
 
@@ -18,13 +18,13 @@ export default function Room() {
       </div>
 
       <div className='bg-black mx-auto flex items-center justify-center min-h-screen flex-col md:flex-row max-w-4xl'>
-        <AnimatedPinDemo
+        <AnimatedPin
           href="/room/create"
           title="Create a Room"
           name="Create a Room"
           description="Create an epic room to code and conquer challenges with your teammates!"
         />
-        <AnimatedPinDemo
+        <AnimatedPin
           href="/room/join"
           title="Join a Room"
           name="Join a Room"

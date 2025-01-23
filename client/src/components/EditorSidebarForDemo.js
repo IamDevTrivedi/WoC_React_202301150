@@ -11,7 +11,7 @@ import languages from '../Constants/languages';
 import { EditorContext } from '../Context/EditorTryContext';
 
 
-const EditorSidebar = () => {
+const EditorSidebarForDemo = () => {
 
     const { complierState, editorState, setEditorState, handleDownloadCode, setComplierState, handleRunCode, isSideBarOpen, setIsSideBarOpen, handleFormatCode, handleFontSizeChange, handleWordWrapChange, handleLanguageChange, handleThemeChange } = useContext(EditorContext);
 
@@ -295,4 +295,4 @@ const EditorSidebar = () => {
 
 
 
-export default EditorSidebar;
+export default EditorSidebarForDemo;

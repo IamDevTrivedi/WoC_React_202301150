@@ -4,7 +4,7 @@ import { Input } from "../components/ui/input";
 import { cn } from "../lib/utils";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
-import Navbar from "../components/NavbarDemo";
+import Navbar from "../components/NavBarHome";
 import { useContext } from "react";
 import { AppContext } from "../Context/AppContext";
 
@@ -27,7 +27,7 @@ function JoinRoom() {
     }
   };
 
-  document.title = "Join Room | EditFlow | Enhance Your Coding Experience";
+  document.title = "Join Room | EditFlow";
 
   return (
     <>

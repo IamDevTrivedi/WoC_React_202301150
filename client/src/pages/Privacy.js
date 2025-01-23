@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
-import Navbar from '../components/NavbarDemo'
+import Navbar from '../components/NavBarHome'
 
 const PrivacyPolicy = () => {
     const sections = [
@@ -16,7 +16,7 @@ const PrivacyPolicy = () => {
         { id: 'contact-us', title: 'Contact Us' },
     ]
 
-    document.title = "Privacy Policy | EditFlow | Enhance Your Coding Experience";
+    document.title = "Privacy Policy | EditFlow";
 
     return (
         <>

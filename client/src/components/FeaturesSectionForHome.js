@@ -12,7 +12,7 @@ import {
 
 
 
-export function FeaturesSectionDemo() {
+export function FeaturesSectionForHome() {
 
 
     const features = [

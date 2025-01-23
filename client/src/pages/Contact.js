@@ -3,13 +3,13 @@ import { Mail, Phone, MapPin, Send } from 'lucide-react'
 import { message } from 'antd'
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
-import Navbar from '../components/NavbarDemo'
+import Navbar from '../components/NavBarHome'
 import Footer from '../components/Footer'
 
 const Contact = () => {
 
 
-    document.title = "Contact Us | EditFlow | Enhance Your Coding Experience";
+    document.title = "Contact Us | EditFlow";
 
 
     const [formData, setFormData] = useState({
