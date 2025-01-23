@@ -60,8 +60,8 @@ export default function CodeEditorDemo() {
     <div className="h-screen w-full overflow-hidden bg-neutral-950">
       <Split
         direction="vertical"
-        sizes={[60, 40]}
-        minSize={100}
+         sizes={[60, 40]}
+         minSize={100}
         gutterSize={8}
         className="flex flex-col h-full split-wrapper"
         style={{ height: "100%" }}

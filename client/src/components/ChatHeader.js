@@ -26,7 +26,7 @@ export default function ChatHeader() {
                     </div>
                     <div className="flex flex-col">
                         <h1 className="text-xl font-bold text-white tracking-wide">
-                            Nebula
+                            Aurora
                         </h1>
                         <span className="text-xs text-white">AI Code Assistant</span>
                     </div>
