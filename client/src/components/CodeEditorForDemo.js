@@ -4,6 +4,7 @@ import Split from "react-split"
 import { EditorContext } from "../Context/EditorTryContext"
 import { message } from "antd"
 import languages from "../Constants/languages"
+import Loading from "./Loading"
 
 export default function CodeEditorForDemo() {
   const [mounted, setMounted] = useState(false)
@@ -51,9 +52,7 @@ export default function CodeEditorForDemo() {
 
   if (!mounted) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-      </div>
+      <Loading /> 
     )
   }
 
