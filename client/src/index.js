@@ -5,15 +5,18 @@ import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import { AppContextProvider } from './Context/AppContext';
 import { EditorTryProvider } from './Context/EditorTryContext';
+import { EditorProvider } from './Context/EditorContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
   < EditorTryProvider >
-    <AppContextProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </AppContextProvider>
+    < EditorProvider >
+      <AppContextProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </AppContextProvider>
+    </EditorProvider>
   </EditorTryProvider>
 );

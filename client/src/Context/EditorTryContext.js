@@ -170,7 +170,6 @@ const EditorTryProvider = ({ children }) => {
     }
 
 
-
     const handleDownloadCode = () => {
         const element = document.createElement('a');
         const file = new Blob([editorState.codeContent], { type: 'text/plain' });

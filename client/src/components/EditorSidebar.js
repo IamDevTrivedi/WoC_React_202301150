@@ -1,51 +1,50 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Sidebar, Menu } from 'react-pro-sidebar';
-import { ChevronLeft, ChevronRight, File, FilePlus, FolderPen, Trash2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Download, File, FilePlus, FolderPen, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { EditorContext } from '../Context/EditorContext';
+
 
 const EditorSidebar = () => {
   const [files] = useState([
-    "file1",
-    "file2",
-    "file3",
-    "file4",
-    "file5",
-    "file6",
-    "file7",
-    "file8",
-    "file9"
+    'index.html',
+    'style.css',
+    'script.js',
+    'README.md',
+    'package.json',
+    'package-lock.json',
   ]);
 
-  // State to control sidebar collapse
-  const [collapsed, setCollapsed] = useState(false);
 
-  // Toggle collapse state
+  const { isSideBarOpen, setIsSideBarOpen } = useContext(EditorContext);
+
+
   const toggleSidebar = () => {
-    setCollapsed(!collapsed);
+    setIsSideBarOpen(!isSideBarOpen);
   };
 
   return (
     <Sidebar
-      collapsed={collapsed}
+      collapsed={isSideBarOpen}
       backgroundColor="#1f1e1e"
       className="h-[calc(100vh-47px)] bg-neutral-800 text-gray-50 overflow-y-hidden"
     >
       {/* Header */}
       <div className="p-4 flex items-center justify-between border-b border-neutral-800">
-        <Link to="/" className={`text-white text-2xl font-semibold ${collapsed ? 'hidden' : 'block'}`}>
+        <Link to="/" className={`text-white text-2xl font-semibold ${isSideBarOpen ? 'hidden' : 'block'}`}>
           EditFlow
         </Link>
         <button
           onClick={toggleSidebar}
           className="p-1.5 rounded-lg bg-neutral-800 hover:bg-neutral-900 transition-colors"
         >
-          {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+          {isSideBarOpen ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
         </button>
       </div>
 
       <div className='px-1 border border-neutral-800'></div>
 
-      <div className={`${collapsed ? 'hidden' : 'block'}`}>
+      <div className={`${isSideBarOpen ? 'hidden' : 'block'}`}>
 
         <button
           className="px-4 py-1 w-full text-left hover:bg-neutral-900 flex items-center text-gray-100"
@@ -58,7 +57,7 @@ const EditorSidebar = () => {
       <div className='px-1 border border-neutral-800'></div>
 
       <Menu
-        className={`pt-4 ${collapsed ? 'hidden' : 'block'}`}
+        className={`pt-4 ${isSideBarOpen ? 'hidden' : 'block'}`}
         menuItemStyles={{
           button: {
             color: '#f9fafb',
@@ -80,15 +79,20 @@ const EditorSidebar = () => {
                 {fileName}
               </span>
               <span className="flex items-center space-x-2">
-                <Trash2
+                <Download
                   size={20}
                   className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
-                  aria-label="Delete file"
+                  aria-label="Edit folder"
                 />
                 <FolderPen
                   size={20}
                   className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
                   aria-label="Edit folder"
+                />
+                <Trash2
+                  size={20}
+                  className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
+                  aria-label="Delete file"
                 />
               </span>
             </li>

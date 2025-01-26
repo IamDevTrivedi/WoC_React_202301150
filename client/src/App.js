@@ -50,7 +50,6 @@ export default function App() {
     <div>
 
       <Routes>
-
         {/* basic routes  */}
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -92,11 +91,7 @@ export default function App() {
         <Route path="*" element={<NotFound />} />
 
 
-
       </Routes>
-
-
-
     </div>
   )
 }
