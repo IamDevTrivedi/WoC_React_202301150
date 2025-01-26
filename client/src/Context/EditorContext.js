@@ -5,7 +5,6 @@ const EditorContext = createContext();
 
 const EditorProvider = ({ children }) => {
 
-
     const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
     const [editorState, setEditorState] = useState({
@@ -170,7 +169,6 @@ const EditorProvider = ({ children }) => {
     };
 
 
-
     const value = {
         isSideBarOpen,
         setIsSideBarOpen,
@@ -188,8 +186,9 @@ const EditorProvider = ({ children }) => {
         handleFormatCode,
         handleWordWrap,
         handleLanguageChange,
-        handleChangeTheme
+        handleChangeTheme, 
     };
+
     return (
         <EditorContext.Provider value={value}>
             {children}

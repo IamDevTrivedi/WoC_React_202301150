@@ -4,6 +4,8 @@ import { EditorContext } from "../Context/EditorContext.js"
 import themeNames from "../Constants/themeNames.js"
 import languages from "../Constants/languages.js"
 import availableFontSize from "../Constants/availableFontSize.js"
+import { Popover } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 export default function EditorNav() {
   const {
@@ -13,10 +15,12 @@ export default function EditorNav() {
     handleRunCode,
     handleFormatCode,
     handleWordWrap,
-    handleAIAssist,
     handleLanguageChange,
     handleChangeTheme
   } = useContext(EditorContext);
+
+
+  const navigate = useNavigate();
 
 
   return (
@@ -91,12 +95,20 @@ export default function EditorNav() {
             <FileCode className="w-4 h-4 mr-1" /> Format
           </button>
 
-          <button
-            onClick={handleAIAssist}
-            className="bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-gray-100 px-2 py-1 rounded text-sm flex items-center"
+          <Popover
+            placement="bottom"
+            title="Ask Aurora"
+            content="Aurora automatically take real time context of this Code and Answers your queries"
           >
-            <BrainCircuit className="w-4 h-4 mr-1" /> AI
-          </button>
+            <button
+              onClick={() => {
+                navigate("/aurora");
+              }}
+              className="bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-gray-100 px-2 py-1 rounded text-sm flex items-center"
+            >
+              <BrainCircuit className="w-4 h-4 mr-1" /> AI
+            </button>
+          </Popover>
 
           <button
             onClick={handleWordWrap}

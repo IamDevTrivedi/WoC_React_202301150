@@ -41,18 +41,25 @@ const geminiController = {
 
         logger.post("/api/gemini/ask-file");
 
-        const { codeId, question } = req.body;
+        const { code, question } = req.body;
+
+
+        if (!code) {
+            return res.status(400).json({
+                success: false,
+                message: 'Code is required'
+            });
+        }
+
+        if (!question) {
+            return res.status(400).json({
+                success: false,
+                message: 'Question is required'
+            });
+        }
+
 
         try {
-            const existingCode = await Code.findOne({ codeId });
-            if (!existingCode) {
-                return res.status(404).json({
-                    success: false,
-                    message: 'Code not found'
-                });
-            }
-
-            const { code } = existingCode;
             const chat = model.startChat({
                 history: [
                     {
