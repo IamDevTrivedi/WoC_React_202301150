@@ -7,7 +7,7 @@ import { message } from 'antd';
 
 export default function CodeEditorForMain() {
 
-  const { editorState, setEditorState, complierState, setComplierState } = useContext(EditorContext);
+  const { editorState, setEditorState, complierState, setComplierState, monacoRef, monacoInstanceRef } = useContext(EditorContext);
 
   return (
     <Split
@@ -24,7 +24,6 @@ export default function CodeEditorForMain() {
         </div>
         <Editor
           height="calc(100% - 36px)"
-          // defaultLanguage={editorState.editorLanguage}
           language={editorState.editorLanguage}
           defaultValue={editorState.editorCodeContent}
           value={editorState.editorCodeContent}
@@ -47,9 +46,12 @@ export default function CodeEditorForMain() {
             padding: { top: 8 },
           }}
           theme={editorState.editorTheme}
+          onMount={(editor, monaco) => {
+            monacoRef.current = editor;
+            monacoInstanceRef.current = monaco;
+          }}
         />
       </div>
-
 
       <div className="overflow-hidden">
         <Split sizes={[50, 50]} minSize={100} gutterSize={8} className="flex h-full" style={{ height: "100%" }}>

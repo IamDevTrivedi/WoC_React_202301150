@@ -10,26 +10,23 @@ export default function EditorNav() {
     editorState,
     setEditorState,
     complierState,
-    setComplierState,
     handleRunCode,
     handleFormatCode,
     handleWordWrap,
-    handleAIAssist, 
-    handleLanguageChange  
+    handleAIAssist,
+    handleLanguageChange,
+    handleChangeTheme
   } = useContext(EditorContext);
 
 
   return (
     <nav className="bg-neutral-900 text-gray-100 px-4 py-2 border-b border-neutral-700">
       <div className="flex justify-between items-center">
-        {/* Theme Selector */}
         <div className="relative">
           <select
+            id="themeSelector"
             value={editorState.editorTheme}
-            onChange={(e) => setEditorState(prev => ({
-              ...prev,
-              editorTheme: e.target.value
-            }))}
+            onChange={(e) => handleChangeTheme(e.target.value)}
             className="appearance-none bg-neutral-800 border border-neutral-700 text-gray-200 rounded px-2 py-1 pr-6 text-sm focus:outline-none"
           >
             {themeNames.map((name) => (

@@ -1,5 +1,4 @@
-import { editor } from 'monaco-editor';
-import React, { createContext, useState } from 'react';
+import React, { createContext, useRef, useState } from 'react';
 import languages from '../Constants/languages';
 
 const EditorContext = createContext();
@@ -7,12 +6,12 @@ const EditorContext = createContext();
 const EditorProvider = ({ children }) => {
 
 
-    const [isSideBarOpen, setIsSideBarOpen] = useState(false); // done
+    const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
     const [editorState, setEditorState] = useState({
         editorLanguage: "javascript",
         editorTheme: "vs-dark",
-        editorFontSize: 14,
+        editorFontSize: 16,
         editorCodeContent: "// Write your code here",
         isWordWrap: false,
         editorFileExtension: ".js",
@@ -137,6 +136,40 @@ const EditorProvider = ({ children }) => {
         }));
     }
 
+    const monacoRef = useRef(null);
+    const monacoInstanceRef = useRef(null);
+
+    const handleChangeTheme = (themeName) => {
+
+        console.log('Theme Name:', themeName);        
+
+        fetch(`/Constants/${themeName}.json`)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch theme: ${themeName}`);
+                }
+                return response.json();
+            })
+            .then((themeData) => {
+                if (monacoInstanceRef.current) {
+                    monacoInstanceRef.current?.editor.defineTheme(themeName, themeData);
+                    monacoInstanceRef.current?.editor.setTheme(themeName);
+                } else {
+                    console.error("Monaco instance is not available");
+                }
+            })
+            .catch((error) => {
+                console.error("Error changing theme: ", error);
+            });
+
+
+        setEditorState(prev => ({
+            ...prev,
+            editorTheme: themeName
+        }));
+    };
+
+
 
     const value = {
         isSideBarOpen,
@@ -148,10 +181,14 @@ const EditorProvider = ({ children }) => {
         complierState,
         setComplierState,
 
+        monacoRef,
+        monacoInstanceRef,
+
         handleRunCode,
         handleFormatCode,
         handleWordWrap,
         handleLanguageChange,
+        handleChangeTheme
     };
     return (
         <EditorContext.Provider value={value}>
