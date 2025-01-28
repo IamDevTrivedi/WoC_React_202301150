@@ -98,7 +98,7 @@ export default function EditorNav() {
           <Popover
             placement="bottom"
             title="Ask Aurora"
-            content="Aurora automatically take real time context of this Code and Answers your queries"
+            content="Debug your code with Aurora"
           >
             <button
               onClick={() => {

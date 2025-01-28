@@ -1,8 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Home } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { MoveLeft } from 'lucide-react';
 
 export default function ChatHeader() {
+
+    const navigate = useNavigate();
+
     return (
         <header className="sticky top-0 z-10 border-b border-gray-500/40 bg-gradient-to-r from-neutral-900 via-black to-neutral-900 backdrop-blur-md shadow-lg">
             <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
@@ -38,13 +41,13 @@ export default function ChatHeader() {
 
                 {/* Center section with home link */}
                 <div className="flex items-center gap-6">
-                    <Link
-                        to="/"
+                    <span
+                        onClick={() => navigate(-1)}
                         className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r bg-blue-900/30 border border-blue-800 hover:border hover:border-gray-400 transition-all duration-300 text-white text-sm font-medium shadow-md"
                     >
-                        <Home size={16} />
-                        Home
-                    </Link>
+                        <MoveLeft size={16} />
+                        Go Back
+                    </span>
                 </div>
             </div>
         </header>
