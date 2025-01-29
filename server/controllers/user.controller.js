@@ -48,7 +48,7 @@ const userController = {
         const { id, fileFullName } = req.body;
 
 
-        if (!req.files) {
+        if (!id || !fileFullName) {
             return res.status(400).json({ success: false, message: "Please upload a file" });
         }
 
@@ -66,7 +66,7 @@ const userController = {
             const fileName = parts.join('.');
             const fileId = v4();
 
-            const selectedLanguage = languages.find((lang) => lang.extension === fileExtension);
+            const selectedLanguage = languages.find((lang) => lang.extension === "." + fileExtension);
 
             if (!selectedLanguage) {
                 return res.status(400).json({ success: false, message: "Unsupported file extension" });
@@ -205,7 +205,13 @@ const userController = {
             const fileExtension = parts.pop();
             const fileName = parts.join('.');
 
-            const updatedFile = await File.findOneAndUpdate({ fileOwner: id, fileId }, { fileFullName, fileName, fileExtension }, { new: true });
+            const selectedLanguage = languages.find((lang) => lang.extension === "." + fileExtension);
+
+            if (!selectedLanguage) {
+                return res.status(400).json({ success: false, message: "Unsupported file extension" });
+            }
+
+            const updatedFile = await File.findOneAndUpdate({ fileOwner: id, fileId }, { fileFullName, fileName, fileExtension, fileLanguage: selectedLanguage.editorLanguage }, { new: true });
 
             if (!updatedFile) {
                 return res.status(404).json({ success: false, message: "File not found" });

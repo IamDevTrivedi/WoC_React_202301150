@@ -1,28 +1,35 @@
 import { useState, useContext, useEffect } from 'react';
 import { Sidebar, Menu } from 'react-pro-sidebar';
 import { ChevronLeft, ChevronRight, Download, File, FilePlus, FolderPen, Trash2 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { EditorContext } from '../Context/EditorContext';
 import Loading from './Loading';
 
 
 const EditorSidebar = () => {
 
-  const { isSideBarOpen, setIsSideBarOpen, files, handleAddNewFile, handleGetAllFiles } = useContext(EditorContext);
+  const { isSideBarOpen, setIsSideBarOpen, files, handleAddNewFile, handleGetAllFiles, handleDownloadFile, handleDeleteFile, handleRenameFile } = useContext(EditorContext);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+    const init = async () => {
+      try {
+        setLoading(true);
 
-    try {
-      setLoading(true);
-      handleGetAllFiles();
-    } catch (error) {
-      console.error(error);
-    }
-    finally {
-      setLoading(false);
-    }
+        if (!await handleGetAllFiles()) {
+          navigate('/login');
+        }
 
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    init();
   }, []);
 
   const toggleSidebar = () => {
@@ -30,14 +37,10 @@ const EditorSidebar = () => {
   };
 
   if (loading) {
-
     return <Loading />;
-
   }
 
   return (
-
-
 
     <Sidebar
       collapsed={isSideBarOpen}
@@ -95,21 +98,33 @@ const EditorSidebar = () => {
                 {file.fileFullName}
               </span>
               <span className="flex items-center space-x-2">
-                <Download
-                  size={20}
-                  className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
-                  aria-label="Edit folder"
-                />
-                <FolderPen
-                  size={20}
-                  className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
-                  aria-label="Edit folder"
-                />
-                <Trash2
-                  size={20}
-                  className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
-                  aria-label="Delete file"
-                />
+                <span>
+                  <Download
+                    onClick={() => {
+                      console.log('Download file:', file);
+                      handleDownloadFile(file.fileId);
+                    }}
+                    size={20}
+                    className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
+                    aria-label="Edit folder"
+                  />
+                </span>
+                <span>
+                  <FolderPen
+                    onClick={() => handleRenameFile(file.fileId)}
+                    size={20}
+                    className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
+                    aria-label="Edit folder"
+                  />
+                </span>
+                <span>
+                  <Trash2
+                    onClick={() => handleDeleteFile(file.fileId)}
+                    size={20}
+                    className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
+                    aria-label="Delete file"
+                  />
+                </span>
               </span>
             </li>
           ))}
