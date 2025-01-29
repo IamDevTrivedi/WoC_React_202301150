@@ -8,7 +8,8 @@ const logger = require('../lib/logger.lib.js');
 const User = require('../models/user.model.js');
 const File = require('../models/file.model.js');
 const { v4 } = require('uuid');
-const { get } = require('request');
+const languages = require('../Constants/languages.js');
+
 
 // User controller
 const userController = {
@@ -44,38 +45,50 @@ const userController = {
 
         logger.post("/api/user/add-file");
 
-        // get the required fields from the request body
-        const { id, fileName, fileLanguage, fileContent } = req.body;
+        const { id, fileFullName } = req.body;
 
-        if (!id || !fileName || !fileLanguage || !fileContent) {
-            return res.status(400).json({ success: false, message: "Please provide all the required fields" });
+
+        if (!req.files) {
+            return res.status(400).json({ success: false, message: "Please upload a file" });
         }
 
         try {
 
-            const user = await User.findById(id);
-            console.log('id', id);
+            const exisitingUser = await User.findById(id);
 
-            if (!user) {
+            if (!exisitingUser) {
                 return res.status(404).json({ success: false, message: "User not found" });
             }
 
 
-            const newFile = new File({
-                fileId: v4(),
-                fileContent: fileContent,
-                owner: id,
-                fileLanguage: fileLanguage,
-                fileName: fileName,
-            });
+            const parts = fileFullName.split('.');
+            const fileExtension = parts.pop();
+            const fileName = parts.join('.');
+            const fileId = v4();
 
+            const selectedLanguage = languages.find((lang) => lang.extension === fileExtension);
+
+            if (!selectedLanguage) {
+                return res.status(400).json({ success: false, message: "Unsupported file extension" });
+            }
+
+            const newFile = new File({
+                fileName,
+                fileExtension,
+                fileFullName,
+                fileId,
+                fileLanguage: selectedLanguage.editorLanguage,
+                fileContent: `// ${fileFullName} : created at ${new Date().toISOString()}`,
+                fileOwner: id
+            })
 
             await newFile.save();
 
-            res.status(201).json({ success: true, message: "File added successfully", data: newFile });
+            res.status(201).json({ success: true, message: "File created successfully", data: newFile });
 
         } catch (error) {
-            return res.status(500).json({ success: false, message: "Internal server error" });
+            logger.error(error);
+            res.status(500).json({ success: false, message: "Internal server error" });
         }
     },
 
@@ -84,34 +97,26 @@ const userController = {
     getFiles: async (req, res) => {
 
         logger.post("/api/user/get-files");
-
         const { id } = req.body;
 
         if (!id) {
-            return res.status(400).json({ success: false, message: "Please provide all the required fields" });
+            return res.status(400).json({ success: false, message: "User id is required" });
         }
 
+
         try {
+            const exisitingUser = await User.findById(id);
 
-            const existingUser = await User.findById(id);
-
-            if (!existingUser) {
+            if (!exisitingUser) {
                 return res.status(404).json({ success: false, message: "User not found" });
             }
 
-
-            const files = await File.find({ owner: id });
-
-            if (files.length === 0) {
-                return res.status(404).json({ success: false, message: "User has no Files" });
-            }
-
+            const files = await File.find({ fileOwner: id });
             res.status(200).json({ success: true, message: "Files fetched successfully", data: files });
-
         } catch (error) {
-            return res.status(500).json({ success: false, message: "Internal server error" });
+            logger.error(error);
+            res.status(500).json({ success: false, message: "Internal server error" });
         }
-
     },
 
 
@@ -119,33 +124,30 @@ const userController = {
     deleteFile: async (req, res) => {
 
         logger.post("/api/user/delete-file");
+        const { id, fileId } = req.body;
 
-        const { fileId, id } = req.body;
-
-        if (!fileId || !id) {
-            return res.status(400).json({ success: false, message: "Please provide all the required fields" });
+        if (!id || !fileId) {
+            return res.status(400).json({ success: false, message: "User id and file id is required" });
         }
 
         try {
+            const exisitingUser = await User.findById(id);
 
-            const existingUser = await User.findById(id);
-
-            if (!existingUser) {
+            if (!exisitingUser) {
                 return res.status(404).json({ success: false, message: "User not found" });
             }
 
-            const existingFile = await File.findOne({ fileId: fileId, owner: id });
+            const file = await File.findOneAndDelete({ fileOwner: id, fileId });
 
-            if (!existingFile) {
+            if (!file) {
                 return res.status(404).json({ success: false, message: "File not found" });
             }
-
-            await File.findOneAndDelete({ fileId: fileId, owner: id });
 
             res.status(200).json({ success: true, message: "File deleted successfully" });
 
         } catch (error) {
-            return res.status(500).json({ success: false, message: "Internal server error" });
+            logger.error(error);
+            res.status(500).json({ success: false, message: "Internal server error" });
         }
     },
 
@@ -153,32 +155,31 @@ const userController = {
     // updateFile controller
     updateFile: async (req, res) => {
 
-        const { fileId, id, newFileContent } = req.body;
+        logger.post("/api/user/update-file");
+        const { id, fileId, fileContent } = req.body;
 
-        if (!fileId || !id || !newFileContent) {
-            return res.status(400).json({ success: false, message: "Please provide all the required fields" });
+        if (!id || !fileId || !fileContent) {
+            return res.status(400).json({ success: false, message: "User id, file id and file content is required" });
         }
 
         try {
+            const exisitingUser = await User.findById(id);
 
-            const existingUser = await User.findById(id);
-
-            if (!existingUser) {
+            if (!exisitingUser) {
                 return res.status(404).json({ success: false, message: "User not found" });
             }
 
-            const existingFile = await File.findOne({ fileId: fileId, owner: id });
+            const updatedFile = await File.findOneAndUpdate({ fileOwner: id, fileId }, { fileContent }, { new: true });
 
-            if (!existingFile) {
+            if (!updatedFile) {
                 return res.status(404).json({ success: false, message: "File not found" });
             }
 
-            await File.findOneAndUpdate({ fileId: fileId, owner: id }, { fileContent: newFileContent });
-
-            res.status(200).json({ success: true, message: "File updated successfully", data: existingFile });
+            res.status(200).json({ success: true, message: "File updated successfully", data: updatedFile });
 
         } catch (error) {
-            return res.status(500).json({ success: false, message: "Internal server error" });
+            logger.error(error);
+            res.status(500).json({ success: false, message: "Internal server error" });
         }
     },
 
@@ -186,36 +187,37 @@ const userController = {
     // renameFile controller
     renameFile: async (req, res) => {
 
-        const { fileId, id, newFileName, fileLanguage } = req.body;
+        logger.post("/api/user/rename-file");
+        const { id, fileId, fileFullName } = req.body;
 
-
-        if (!fileId || !id || !newFileName) {
-            return res.status(400).json({ success: false, message: "Please provide all the required fields" });
+        if (!id || !fileId || !fileFullName) {
+            return res.status(400).json({ success: false, message: "User id, file id and file full name is required" });
         }
 
         try {
+            const exisitingUser = await User.findById(id);
 
-            const existingUser = await User.findById(id);
-
-            if (!existingUser) {
+            if (!exisitingUser) {
                 return res.status(404).json({ success: false, message: "User not found" });
             }
 
-            const existingFile = await File.findOne({ fileId: fileId, owner: id });
+            const parts = fileFullName.split('.');
+            const fileExtension = parts.pop();
+            const fileName = parts.join('.');
 
-            if (!existingFile) {
+            const updatedFile = await File.findOneAndUpdate({ fileOwner: id, fileId }, { fileFullName, fileName, fileExtension }, { new: true });
+
+            if (!updatedFile) {
                 return res.status(404).json({ success: false, message: "File not found" });
             }
 
-            await File.findOneAndUpdate({ fileId: fileId, owner: id }, { fileName: newFileName, fileLanguage: fileLanguage });
-
-            res.status(200).json({ success: true, message: "File renamed successfully", data: existingFile });
+            res.status(200).json({ success: true, message: "File renamed successfully", data: updatedFile });
 
         } catch (error) {
-            return res.status(500).json({ success: false, message: "Internal server error" });
+            logger.error(error);
+            res.status(500).json({ success: false, message: "Internal server error" });
         }
     }
-
 }
 
 module.exports = userController;

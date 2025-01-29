@@ -1,29 +1,44 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Sidebar, Menu } from 'react-pro-sidebar';
 import { ChevronLeft, ChevronRight, Download, File, FilePlus, FolderPen, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EditorContext } from '../Context/EditorContext';
+import Loading from './Loading';
 
 
 const EditorSidebar = () => {
-  const [files] = useState([
-    'index.html',
-    'style.css',
-    'script.js',
-    'README.md',
-    'package.json',
-    'package-lock.json',
-  ]);
 
+  const { isSideBarOpen, setIsSideBarOpen, files, handleAddNewFile, handleGetAllFiles } = useContext(EditorContext);
+  const [loading, setLoading] = useState(false);
 
-  const { isSideBarOpen, setIsSideBarOpen } = useContext(EditorContext);
+  useEffect(() => {
 
+    try {
+      setLoading(true);
+      handleGetAllFiles();
+    } catch (error) {
+      console.error(error);
+    }
+    finally {
+      setLoading(false);
+    }
+
+  }, []);
 
   const toggleSidebar = () => {
     setIsSideBarOpen(!isSideBarOpen);
   };
 
+  if (loading) {
+
+    return <Loading />;
+
+  }
+
   return (
+
+
+
     <Sidebar
       collapsed={isSideBarOpen}
       backgroundColor="#1f1e1e"
@@ -48,6 +63,7 @@ const EditorSidebar = () => {
 
         <button
           className="px-4 py-1 w-full text-left hover:bg-neutral-900 flex items-center text-gray-100"
+          onClick={handleAddNewFile}
         >
           <FilePlus size={20} className="mr-2" />
           New File
@@ -69,14 +85,14 @@ const EditorSidebar = () => {
         }}
       >
         <ul>
-          {files.map((fileName, index) => (
+          {files.map((file, index) => (
             <li
               key={index}
               className="flex items-center justify-between text-gray-300 px-4 py-1"
             >
               <span className="flex items-center">
                 <File size={15} className="mr-2" />
-                {fileName}
+                {file.fileFullName}
               </span>
               <span className="flex items-center space-x-2">
                 <Download
