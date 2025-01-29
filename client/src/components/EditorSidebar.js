@@ -93,7 +93,7 @@ const EditorSidebar = () => {
               key={index}
               className="flex items-center justify-between text-gray-300 px-4 py-1"
             >
-              <span className="flex items-center">
+              <span className="flex items-center cursor-pointer">
                 <File size={15} className="mr-2" />
                 {file.fileFullName}
               </span>
