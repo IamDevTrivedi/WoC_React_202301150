@@ -78,7 +78,7 @@ const userController = {
                 fileFullName,
                 fileId,
                 fileLanguage: selectedLanguage.editorLanguage,
-                fileContent: `// ${fileFullName} : created at ${new Date().toISOString()}`,
+                fileContent: `// ${fileFullName} : created at ${new Date().toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', weekday: 'long' })}, ${new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}`,
                 fileOwner: id
             })
 
