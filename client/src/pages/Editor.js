@@ -1,6 +1,6 @@
 import React from 'react';
 import EditorNav from '../components/EditorNav';
-import EditorSidebar from '../components/EditorSideBar.js';
+import EditorSidebar from '../components/EditorSidebar'
 import CodeEditorForMain from '../components/CodeEditorForMain';
 
 export default function MainEditor() {

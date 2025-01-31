@@ -30,7 +30,7 @@ export function Login() {
     console.log("Login form submitted", formData);
 
     if (await login(formData)) {
-      navigate("/");
+      navigate("/editor");
     }
   };
 
