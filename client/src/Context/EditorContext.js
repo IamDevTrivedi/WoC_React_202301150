@@ -26,7 +26,7 @@ const EditorProvider = ({ children }) => {
         editorLanguage: "javascript",
         editorTheme: "vs-dark",
         editorFontSize: 16,
-        editorCodeContent: "// Write your code here",
+        editorCodeContent: "// Open or Create File to write code here",
         isWordWrap: false,
         editorFileExtension: ".js",
         editorInput: "",
@@ -187,6 +187,19 @@ const EditorProvider = ({ children }) => {
 
     /******************************************************************************/
 
+
+    const sortFiles = (files) => {
+        return files.sort((a, b) => {
+            if (a.fileFullName < b.fileFullName) {
+                return -1;
+            }
+            if (a.fileFullName > b.fileFullName) {
+                return 1;
+            }
+            return 0;
+        });
+    };
+
     const handleAddNewFile = async () => {
         const fileFullName = prompt('Enter file name with extension:');
 
@@ -213,6 +226,7 @@ const EditorProvider = ({ children }) => {
 
             if (data.success) {
                 setFiles(prev => [...prev, data.data]);
+                setFiles(sortFiles(files));
                 return true;
             } else {
                 console.error('Failed to add new file:', data.error);
@@ -330,6 +344,7 @@ const EditorProvider = ({ children }) => {
                             : file
                     )
                 );
+                setFiles(sortFiles(files));
                 message.success('File renamed successfully!');
                 return true;
             } else {
@@ -353,6 +368,10 @@ const EditorProvider = ({ children }) => {
             return false;
         }
 
+        if (fileId === openFile) {
+            setOpenFile(files[0].fileId);
+        }
+
         try {
 
             const { data } = await axiosInstance.post("/api/user/delete-file", {
@@ -363,6 +382,7 @@ const EditorProvider = ({ children }) => {
                 setFiles((prevFiles) =>
                     prevFiles.filter((file) => file.fileId !== fileId)
                 );
+                setFiles(sortFiles(files));
                 message.success('File deleted successfully!');
                 return true;
             }
@@ -377,7 +397,82 @@ const EditorProvider = ({ children }) => {
             message.error('Failed to delete file. Please try again.');
             return false;
         }
+    }
 
+    const [openFile, setOpenFile] = useState(null);
+
+
+    const handleFileOnClick = (fileId) => {
+
+        const file = files.find((file) => file.fileId === fileId);
+        const selectedLanguage = languages.find(lang => lang.editorLanguage === file.fileLanguage);
+
+        setOpenFile(fileId);
+
+        if (!file) {
+            message.error('File not found!');
+            return false;
+        }
+
+        if (!selectedLanguage) {
+            message.error('Language not found!');
+            return false;
+        }
+
+        setEditorState(prev => ({
+            ...prev,
+            editorCodeContent: file.fileContent,
+            editorFileExtension: "." + file.fileExtension,
+            editorLanguage: file.fileLanguage,
+        }));
+
+        setComplierState(prev => ({
+            ...prev,
+            complierLanguage: selectedLanguage.codeLanguage,
+            complierOutput: "",
+            complierError: "",
+            isComplierRunning: false,
+        }));
+
+        return true;
+    }
+
+
+    const handleSaveFile = async () => {
+
+        const file = files.find((file) => file.fileId === openFile);
+
+        console.log('Open File:', openFile);
+
+
+        if (!file) {
+            message.error('File not found!');
+            return false;
+        }
+
+        try {
+
+
+            const { data } = await axiosInstance.post("/api/user/update-file", {
+                fileContent: editorState.editorCodeContent,
+                fileId: openFile
+            });
+
+            if (data.success) {
+                files.find((file) => file.fileId === openFile).fileContent = editorState.editorCodeContent;
+                return true;
+            }
+            else {
+                console.error('Failed to save file:', data.error);
+                message.error(`Failed to save file: ${data.error}`);
+                return false;
+            }
+
+        } catch (error) {
+            console.error('Failed to save file:', error);
+            message.error('Failed to save file. Please try again.');
+            return false;
+        }
     }
 
     const value = {
@@ -407,7 +502,12 @@ const EditorProvider = ({ children }) => {
 
         handleDownloadFile,
         handleRenameFile,
-        handleDeleteFile
+        handleDeleteFile,
+        handleFileOnClick,
+        handleSaveFile,
+
+        openFile,
+        setOpenFile,
     };
 
     return (

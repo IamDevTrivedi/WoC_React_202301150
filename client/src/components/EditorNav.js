@@ -22,6 +22,7 @@ export default function EditorNav() {
 
   const navigate = useNavigate();
 
+  const { openFile } = useContext(EditorContext);
 
   return (
     <nav className="bg-neutral-900 text-gray-100 px-4 py-2 border-b border-neutral-700">
@@ -44,8 +45,10 @@ export default function EditorNav() {
 
         {/* Language and Font Size Selection */}
         <div className="flex space-x-2">
+
           <div className="relative">
             <select
+              disabled={openFile ? true : false}
               value={languages.find((lang) => lang.editorLanguage === editorState.editorLanguage).roomLanguage}
               onChange={(e) => handleLanguageChange(e)}
               className="appearance-none bg-neutral-800 border border-neutral-700 text-gray-200 rounded px-2 py-1 pr-6 text-sm focus:outline-none"
@@ -119,6 +122,6 @@ export default function EditorNav() {
           </button>
         </div>
       </div>
-    </nav>
+    </nav >
   )
 }

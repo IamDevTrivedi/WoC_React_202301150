@@ -7,7 +7,7 @@ import { message } from 'antd';
 
 export default function CodeEditorForMain() {
 
-  const { editorState, setEditorState, complierState, setComplierState, monacoRef, monacoInstanceRef } = useContext(EditorContext);
+  const { editorState, handleSaveFile, openFile, setEditorState, complierState, setComplierState, monacoRef, monacoInstanceRef } = useContext(EditorContext);
 
   return (
     <Split
@@ -27,16 +27,20 @@ export default function CodeEditorForMain() {
           language={editorState.editorLanguage}
           defaultValue={editorState.editorCodeContent}
           value={editorState.editorCodeContent}
-          onChange={(value) =>
+          onChange={async (value) => {
             setEditorState((prev) => ({
               ...prev,
               editorCodeContent: value
             }))
+
+            await handleSaveFile();
+          }
           }
           options={{
             fontSize: editorState.editorFontSize,
             wordWrap: editorState.isWordWrap ? "on" : "off",
             minimap: { enabled: true },
+            readOnly: !openFile,
             scrollbar: {
               vertical: "visible",
               horizontal: "visible",

@@ -8,7 +8,7 @@ import Loading from './Loading';
 
 const EditorSidebar = () => {
 
-  const { isSideBarOpen, setIsSideBarOpen, files, handleAddNewFile, handleGetAllFiles, handleDownloadFile, handleDeleteFile, handleRenameFile } = useContext(EditorContext);
+  const { isSideBarOpen, setIsSideBarOpen, handleFileOnClick, files, handleAddNewFile, handleGetAllFiles, handleDownloadFile, handleDeleteFile, handleRenameFile } = useContext(EditorContext);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -20,6 +20,10 @@ const EditorSidebar = () => {
 
         if (!await handleGetAllFiles()) {
           navigate('/login');
+        }
+        else 
+        {
+
         }
 
       } catch (error) {
@@ -93,7 +97,7 @@ const EditorSidebar = () => {
               key={index}
               className="flex items-center justify-between text-gray-300 px-4 py-1"
             >
-              <span className="flex items-center cursor-pointer">
+              <span className="flex items-center cursor-pointer" onClick={() => handleFileOnClick(file.fileId)}>
                 <File size={15} className="mr-2" />
                 {file.fileFullName}
               </span>
