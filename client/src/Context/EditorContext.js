@@ -225,8 +225,11 @@ const EditorProvider = ({ children }) => {
             });
 
             if (data.success) {
-                setFiles(prev => [...prev, data.data]);
-                setFiles(sortFiles(files));
+
+                setFiles((prev) => {
+                    return sortFiles([...prev, data.data]);
+                })
+
                 return true;
             } else {
                 console.error('Failed to add new file:', data.error);
@@ -248,7 +251,7 @@ const EditorProvider = ({ children }) => {
             const { data } = await axiosInstance.post("/api/user/get-files");
 
             if (data.success) {
-                setFiles(data.data);
+                setFiles(sortFiles(data.data));
                 return true;
             }
             else {
@@ -319,7 +322,7 @@ const EditorProvider = ({ children }) => {
             return false;
         }
 
-        const fileNameRegex = /^[a-zA-Z0-9-_.]+$/; // Allows letters, numbers, hyphens, underscores, and dots
+        const fileNameRegex = /^[a-zA-Z0-9-_.]+$/;
         if (!fileNameRegex.test(newFileName)) {
             message.error('Invalid file name! Only letters, numbers, hyphens, underscores, and dots are allowed.');
             return false;
@@ -337,16 +340,37 @@ const EditorProvider = ({ children }) => {
             });
 
             if (data.success) {
-                setFiles((prevFiles) =>
-                    prevFiles.map((file) =>
-                        file.fileId === fileId
-                            ? { ...file, fileFullName: newFileName }
-                            : file
-                    )
-                );
-                setFiles(sortFiles(files));
+                setFiles((prev) => {
+                    return sortFiles(
+                        prev.map((file) => {
+                            if (file.fileId === fileId) {
+                                return { ...file, fileFullName: newFileName };
+                            } else {
+                                return file;
+                            }
+                        })
+                    );
+                });
+
+                const newExtention = newFileName.split('.').pop();
+                const newLanguage = languages.find(lang => lang.extension === "." + newExtention);
+
+
+                setEditorState((prev) => ({
+                    ...prev,
+                    editorFileExtension: "." + newExtention,
+                    editorLanguage: newLanguage.editorLanguage,
+                }));
+
+                setComplierState((prev) => ({
+                    ...prev,
+                    complierLanguage: newLanguage.codeLanguage,
+                }));
+
+
                 message.success('File renamed successfully!');
                 return true;
+
             } else {
                 console.error('Failed to rename file:', data.error);
                 message.error(`Failed to rename file: ${data.error}`);
@@ -360,44 +384,58 @@ const EditorProvider = ({ children }) => {
     };
 
     const handleDeleteFile = async (fileId) => {
+        // Check if the file exists
+        const fileExists = files.some((file) => file.fileId === fileId);
 
-        const file = files.map((file) => file.fileId === fileId);
-
-        if (!file) {
+        if (!fileExists) {
             message.error('File not found!');
             return false;
         }
 
+        // Handle case where the file to delete is currently open
         if (fileId === openFile) {
-            setOpenFile(files[0].fileId);
+            if (files.length === 1) {
+                // Reset editor state if this is the only file
+                setEditorState((prev) => ({
+                    ...prev,
+                    editorCodeContent: "// Open or Create File to write code here",
+                    editorFileExtension: ".js",
+                    editorLanguage: "javascript",
+                }));
+            } else {
+                // Find the next file to open
+                const nextFile = files.find((file) => file.fileId !== fileId);
+                handleFileOnClick(nextFile.fileId);
+            }
         }
 
         try {
-
+            // Send request to delete the file
             const { data } = await axiosInstance.post("/api/user/delete-file", {
-                fileId
+                fileId,
             });
 
             if (data.success) {
-                setFiles((prevFiles) =>
-                    prevFiles.filter((file) => file.fileId !== fileId)
-                );
-                setFiles(sortFiles(files));
+                // Update the files state by filtering out the deleted file
+                setFiles((prev) => {
+                    const updatedFiles = prev.filter((file) => file.fileId !== fileId);
+                    return sortFiles(updatedFiles); // Sort and return the updated files
+                });
+
                 message.success('File deleted successfully!');
                 return true;
-            }
-            else {
+            } else {
                 console.error('Failed to delete file:', data.error);
                 message.error(`Failed to delete file: ${data.error}`);
                 return false;
             }
-
         } catch (error) {
             console.error('Failed to delete file:', error);
             message.error('Failed to delete file. Please try again.');
             return false;
         }
-    }
+    };
+
 
     const [openFile, setOpenFile] = useState(null);
 
@@ -451,7 +489,6 @@ const EditorProvider = ({ children }) => {
         }
 
         try {
-
 
             const { data } = await axiosInstance.post("/api/user/update-file", {
                 fileContent: editorState.editorCodeContent,
