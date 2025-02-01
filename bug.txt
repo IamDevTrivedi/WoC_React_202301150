@@ -1,5 +1,3 @@
 ==> editor/demo : resize from lef to right is not working
 
 ==> rooms : upon leave of the admin , the others are getting errors 
-
-==> editor : onlu UI is being created and is not functional 

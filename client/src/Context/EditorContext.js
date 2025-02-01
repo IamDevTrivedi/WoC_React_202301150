@@ -21,6 +21,7 @@ const EditorProvider = ({ children }) => {
     });
 
     const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+    const [openFile, setOpenFile] = useState(null);
 
     const [editorState, setEditorState] = useState({
         editorLanguage: "javascript",
@@ -339,12 +340,19 @@ const EditorProvider = ({ children }) => {
                 fileFullName: newFileName,
             });
 
+            const newExtention = newFileName.split('.').pop();
+            const newLanguage = languages.find(lang => lang.extension === "." + newExtention);
+
             if (data.success) {
                 setFiles((prev) => {
                     return sortFiles(
                         prev.map((file) => {
                             if (file.fileId === fileId) {
-                                return { ...file, fileFullName: newFileName };
+                                return {
+                                    ...file, fileFullName: newFileName,
+                                    fileExtension: newExtention,
+                                    fileLanguage: newLanguage?.editorLanguage || 'javascript'
+                                };
                             } else {
                                 return file;
                             }
@@ -352,21 +360,18 @@ const EditorProvider = ({ children }) => {
                     );
                 });
 
-                const newExtention = newFileName.split('.').pop();
-                const newLanguage = languages.find(lang => lang.extension === "." + newExtention);
+                if (openFile === fileId) {
+                    setEditorState((prev) => ({
+                        ...prev,
+                        editorFileExtension: newExtention,
+                        editorLanguage: newLanguage?.editorLanguage || 'javascript'
+                    }));
 
-
-                setEditorState((prev) => ({
-                    ...prev,
-                    editorFileExtension: "." + newExtention,
-                    editorLanguage: newLanguage.editorLanguage,
-                }));
-
-                setComplierState((prev) => ({
-                    ...prev,
-                    complierLanguage: newLanguage.codeLanguage,
-                }));
-
+                    setComplierState((prev) => ({
+                        ...prev,
+                        complierLanguage: newLanguage?.editorLanguage || 'javascript'
+                    }));
+                }
 
                 message.success('File renamed successfully!');
                 return true;
@@ -402,6 +407,16 @@ const EditorProvider = ({ children }) => {
                     editorFileExtension: ".js",
                     editorLanguage: "javascript",
                 }));
+
+                setComplierState(() => ({
+                    complierLanguage: "javascript",
+                    complierOutput: "",
+                    complierError: "",
+                    isComplierRunning: false,
+                }));
+
+                setOpenFile(null);
+
             } else {
                 // Find the next file to open
                 const nextFile = files.find((file) => file.fileId !== fileId);
@@ -437,7 +452,6 @@ const EditorProvider = ({ children }) => {
     };
 
 
-    const [openFile, setOpenFile] = useState(null);
 
 
     const handleFileOnClick = (fileId) => {
