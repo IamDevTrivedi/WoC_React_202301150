@@ -22,6 +22,7 @@ const EditorProvider = ({ children }) => {
 
     const [isSideBarOpen, setIsSideBarOpen] = useState(false);
     const [openFile, setOpenFile] = useState(null);
+    const [files, setFiles] = useState([]);
 
     const [editorState, setEditorState] = useState({
         editorLanguage: "javascript",
@@ -33,7 +34,6 @@ const EditorProvider = ({ children }) => {
         editorInput: "",
     });
 
-    const [files, setFiles] = useState([]);
 
 
     const [complierState, setComplierState] = useState({
