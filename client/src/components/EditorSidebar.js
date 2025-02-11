@@ -5,10 +5,23 @@ import { Link, useNavigate } from 'react-router-dom';
 import { EditorContext } from '../Context/EditorContext';
 import Loading from './Loading';
 
-
 const EditorSidebar = () => {
-
-  const { isSideBarOpen, setIsSideBarOpen, openFile, handleFileOnClick, files, handleUploadFile, handleAddNewFile, handleGetAllFiles, handleDownloadFile, handleDeleteFile, handleRenameFile } = useContext(EditorContext);
+  const {
+    isSideBarOpen,
+    setIsSideBarOpen,
+    openFile,
+    handleFileOnClick,
+    files,
+    handleUploadFile,
+    handleAddNewFile,
+    handleGetAllFiles,
+    handleDownloadFile,
+    handleDeleteFile,
+    handleRenameFile,
+    handleDrop,
+    isDragging,
+    setIsDragging
+  } = useContext(EditorContext);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -17,21 +30,15 @@ const EditorSidebar = () => {
     const init = async () => {
       try {
         setLoading(true);
-
         if (!await handleGetAllFiles()) {
           navigate('/login');
         }
-        else {
-
-        }
-
       } catch (error) {
         console.error(error);
       } finally {
         setLoading(false);
       }
     };
-
     init();
   }, []);
 
@@ -39,16 +46,39 @@ const EditorSidebar = () => {
     setIsSideBarOpen(!isSideBarOpen);
   };
 
+  const handleDragEnter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+
+
   if (loading) {
     return <Loading />;
   }
 
   return (
-
     <Sidebar
       collapsed={isSideBarOpen}
       backgroundColor="#1f1e1e"
-      className="h-[calc(100vh-47px)] bg-neutral-800 text-gray-50 overflow-y-hidden"
+      className={`h-[calc(100vh-47px)] bg-neutral-800 text-gray-50 overflow-y-hidden
+        ${isDragging ? 'border-2 border-dashed border-blue-400' : ''}`}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
     >
       {/* Header */}
       <div className="p-4 flex items-center justify-between border-b border-neutral-800">
@@ -66,7 +96,6 @@ const EditorSidebar = () => {
       <div className='px-1 border border-neutral-800'></div>
 
       <div className={`${isSideBarOpen ? 'hidden' : 'block'}`}>
-
         <button
           className="px-4 py-1 w-full text-left hover:bg-neutral-900 flex items-center text-gray-100"
           onClick={handleAddNewFile}
@@ -80,7 +109,6 @@ const EditorSidebar = () => {
             await handleUploadFile();
           }}
         >
-
           <FilePlus size={20} className="mr-2" />
           Upload File
         </button>
@@ -89,9 +117,9 @@ const EditorSidebar = () => {
           type='file'
           className='hidden'
           id='upload-file-input'
-        ></input>
-
+        />
       </div>
+
       <div className='px-1 border border-neutral-800'></div>
 
       <Menu
@@ -114,13 +142,11 @@ const EditorSidebar = () => {
             >
               <span className="flex items-center cursor-pointer" onClick={() => handleFileOnClick(file.fileId)}>
                 <File size={15} className="mr-2" />
-                {
-                  openFile === file.fileId ? (
-                    <span className="text-white">{file.fileFullName}</span>
-                  ) : (
-                    <span className='text-gray-400'>{file.fileFullName}</span>
-                  )
-                }
+                {openFile === file.fileId ? (
+                  <span className="text-white">{file.fileFullName}</span>
+                ) : (
+                  <span className='text-gray-400'>{file.fileFullName}</span>
+                )}
               </span>
               <span className="flex items-center space-x-2">
                 <span>
@@ -155,14 +181,11 @@ const EditorSidebar = () => {
           ))}
         </ul>
 
-        {
-          files.length === 0 && (
-            <ul>
-              <li className="text-center text-gray-300 py-4">No files found</li>
-            </ul>
-          )
-        }
-
+        {files.length === 0 && (
+          <ul>
+            <li className="text-center text-gray-300 py-4">No files found</li>
+          </ul>
+        )}
       </Menu>
     </Sidebar>
   );

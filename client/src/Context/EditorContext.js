@@ -23,6 +23,7 @@ const EditorProvider = ({ children }) => {
     const [isSideBarOpen, setIsSideBarOpen] = useState(false);
     const [openFile, setOpenFile] = useState(null);
     const [files, setFiles] = useState([]);
+    const [isDragging, setIsDragging] = useState(false)
 
     const [editorState, setEditorState] = useState({
         editorLanguage: "javascript",
@@ -33,7 +34,6 @@ const EditorProvider = ({ children }) => {
         editorFileExtension: ".js",
         editorInput: "",
     });
-
 
 
     const [complierState, setComplierState] = useState({
@@ -597,6 +597,75 @@ const EditorProvider = ({ children }) => {
     };
 
 
+    const handleDrop = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDragging(false);
+
+        const files = Array.from(e.dataTransfer.files);
+
+        for (const file of files) {
+            try {
+                const fileFullName = file.name;
+
+                // Validate filename
+                const fileNameRegex = /^[a-zA-Z0-9-_]+\.[a-zA-Z0-9]+$/;
+                if (!fileNameRegex.test(fileFullName)) {
+                    message.error(`Invalid file name: ${fileFullName}`);
+                    continue;
+                }
+
+                // Check for duplicate files
+                if (files.find((f) => f.fileFullName === fileFullName)) {
+                    message.error(`File already exists: ${fileFullName}`);
+                    continue;
+                }
+
+                // Read file content
+                const fileContent = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = (e) => reject(e);
+                    reader.readAsText(file);
+                });
+
+                // First API call to add file
+                const { data } = await axiosInstance.post("/api/user/add-file", {
+                    fileFullName
+                });
+
+                if (!data.success) {
+                    message.error(`Failed to upload file ${fileFullName}: ${data.error}`);
+                    continue;
+                }
+
+                // Update files state
+                setFiles((prev) => {
+                    return sortFiles([...prev, data.data]);
+                });
+
+                const fileId = data?.data?.fileId;
+
+                // Second API call to update file content
+                const response = await axiosInstance.post("/api/user/update-file", {
+                    fileId,
+                    fileContent
+                });
+
+                if (response.data.success && await handleGetAllFiles()) {
+                    message.success(`Successfully uploaded ${fileFullName}`);
+                } else {
+                    message.error(`Failed to upload file content for ${fileFullName}: ${response.data.error}`);
+                }
+
+            } catch (error) {
+                message.error(`Failed to upload ${file.name}. Please try again.`);
+                console.error('Error uploading file:', error);
+            }
+        }
+    };
+
+
     const value = {
         isSideBarOpen,
         setIsSideBarOpen,
@@ -628,9 +697,13 @@ const EditorProvider = ({ children }) => {
         handleFileOnClick,
         handleSaveFile,
         handleUploadFile,
+        handleDrop,
 
         openFile,
         setOpenFile,
+
+        isDragging,
+        setIsDragging,
     };
 
     return (
