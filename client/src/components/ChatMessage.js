@@ -1,6 +1,7 @@
 import React from "react";
 import { Bot, User, Copy } from "lucide-react";
 import { message as msg } from 'antd';
+import MarkdownMessage from "./MarkdownMessage";
 
 export function ChatMessage({ message }) {
   const isAssistant = message.role === "assistant";
@@ -38,7 +39,8 @@ export function ChatMessage({ message }) {
             : "bg-gradient-to-br bg-blue-900/30 border border-blue-800 rounded-tr-none backdrop-blur-sm text-neutral-50"
             }`}
         >
-          <p className="prose prose-invert break-words">{message.content}</p>
+          {/* Message Content */}
+          <MarkdownMessage content={message.content} who={isAssistant} />
 
           {/* Timestamp and Copy Button */}
           <div className="mt-2 gap-3 flex items-center justify-between text-xs text-neutral-400">
