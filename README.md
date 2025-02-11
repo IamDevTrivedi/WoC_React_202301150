@@ -2,6 +2,11 @@
 
 EditFlow is a collaborative coding platform that allows developers to write, share, and collaborate on code in real-time. With support for multiple programming languages and a robust feature set, EditFlow provides a seamless environment for both individual developers and teams.
 
+## 🌐 Live Demo
+
+Live at: [https://editflow.netlify.app/](https://editflow.netlify.app/)
+
+
 ## ✨ Features
 
 - **Multi-Language Support**: Write and execute code in multiple programming languages effortlessly
@@ -37,8 +42,8 @@ npm run init
 
 3. Configure environment variables:
 
-   - Rename `.env.example` to `.env` in both client and server directories
-   - Update the values in the `.env` files with your actual configuration
+  - Rename `.env.example` to `.env` in both client and server directories
+  - Update the values in the `.env` files with your actual configuration
 
 4. Start the application from the Root Directory:
 
