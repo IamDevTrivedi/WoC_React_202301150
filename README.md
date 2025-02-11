@@ -29,32 +29,18 @@ EditFlow is a collaborative coding platform that allows developers to write, sha
 git clone https://github.com/IamDevTrivedi/WoC_React_202301150.git
 ```
 
-2. Install root dependencies:
+2. install the Dependency from the Root Directory:
 
 ```bash
-npm install
+npm run init
 ```
 
-3. Install client dependencies:
-
-```bash
-cd client
-npm install
-```
-
-4. Install server dependencies:
-
-```bash
-cd ../server
-npm install
-```
-
-5. Configure environment variables:
+3. Configure environment variables:
 
    - Rename `.env.example` to `.env` in both client and server directories
    - Update the values in the `.env` files with your actual configuration
 
-6. Start the application from the Root Directory:
+4. Start the application from the Root Directory:
 
 ```bash
 npm start

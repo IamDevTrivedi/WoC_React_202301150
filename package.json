@@ -5,7 +5,8 @@
     "start": "concurrently \"npm run start-server\" \"npm run start-client\"",
     "start-server": "cd server && npm start",
     "start-client": "cd client && npm start",
-    "update": "rm -rf node_modules/ package-lock.json && ncu -u && npm install"
+    "update": "rm -rf node_modules/ package-lock.json && ncu -u && npm install",
+    "init": "npm install && cd client && npm install && cd .. && cd server && npm install"
   },
   "devDependencies": {
     "concurrently": "^8.0.0"
