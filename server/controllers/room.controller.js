@@ -5,7 +5,7 @@ const logger = require('../lib/logger.lib.js');
 const Room = require('../models/room.model.js');
 const User = require('../models/user.model.js');
 const { v4 } = require("uuid");
-const languages = require('../constants/languages.js');
+const languages = require('../Constants/languages.js');
 
 
 const roomController = {
