@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import Split from "react-split";
 import Editor from "@monaco-editor/react";
 import { EditorContext } from '../Context/EditorContext';
-import languages from '../Constants/languages';
 import { message } from 'antd';
 
 export default function CodeEditorForMain() {
