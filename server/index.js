@@ -35,7 +35,9 @@ const geminiRoutes = require('./routes/gemini.router.js');
 
 // Environment variables setup
 const PORT = process.env.PORT || 5001;
-const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:3000';
+const CORS_ORIGIN = process.env.NODE_ENV === 'production'
+  ? process.env.FRONTEND_URL_PROD
+  : process.env.FRONTEND_URL;
 const BACKEND_URL = process.env.NODE_ENV === 'production'
   ? process.env.BACKEND_URL_PROD
   : process.env.BACKEND_URL;
