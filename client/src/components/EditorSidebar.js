@@ -8,7 +8,7 @@ import Loading from './Loading';
 
 const EditorSidebar = () => {
 
-  const { isSideBarOpen, setIsSideBarOpen, handleFileOnClick, files, handleUploadFile, handleAddNewFile, handleGetAllFiles, handleDownloadFile, handleDeleteFile, handleRenameFile } = useContext(EditorContext);
+  const { isSideBarOpen, setIsSideBarOpen, openFile, handleFileOnClick, files, handleUploadFile, handleAddNewFile, handleGetAllFiles, handleDownloadFile, handleDeleteFile, handleRenameFile } = useContext(EditorContext);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -80,7 +80,7 @@ const EditorSidebar = () => {
             await handleUploadFile();
           }}
         >
-          
+
           <FilePlus size={20} className="mr-2" />
           Upload File
         </button>
@@ -114,7 +114,13 @@ const EditorSidebar = () => {
             >
               <span className="flex items-center cursor-pointer" onClick={() => handleFileOnClick(file.fileId)}>
                 <File size={15} className="mr-2" />
-                {file.fileFullName}
+                {
+                  openFile === file.fileId ? (
+                    <span className="text-white">{file.fileFullName}</span>
+                  ) : (
+                    <span className='text-gray-400'>{file.fileFullName}</span>
+                  )
+                }
               </span>
               <span className="flex items-center space-x-2">
                 <span>
