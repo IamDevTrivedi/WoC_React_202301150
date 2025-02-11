@@ -418,7 +418,6 @@ const EditorProvider = ({ children }) => {
                 setOpenFile(null);
 
             } else {
-                // Find the next file to open
                 const nextFile = files.find((file) => file.fileId !== fileId);
                 handleFileOnClick(nextFile.fileId);
             }
@@ -450,8 +449,6 @@ const EditorProvider = ({ children }) => {
             return false;
         }
     };
-
-
 
 
     const handleFileOnClick = (fileId) => {
@@ -493,9 +490,7 @@ const EditorProvider = ({ children }) => {
     const handleSaveFile = async () => {
 
         const file = files.find((file) => file.fileId === openFile);
-
         console.log('Open File:', openFile);
-
 
         if (!file) {
             message.error('File not found!');
@@ -520,11 +515,87 @@ const EditorProvider = ({ children }) => {
             }
 
         } catch (error) {
-            console.error('Failed to save file:', error);
-            message.error('Failed to save file. Please try again.');
             return false;
         }
     }
+
+    const handleUploadFile = async () => {
+        const inputNode = document.getElementById("upload-file-input");
+        inputNode.click();
+
+        try {
+            const fileSelection = new Promise((resolve) => {
+                inputNode.addEventListener(
+                    "change",
+                    (event) => {
+                        const file = event.target.files[0];
+                        if (!file) {
+                            throw new Error("No file selected");
+                        }
+                        resolve({ file: file, fileName: file.name });
+                    },
+                    { once: true }
+                );
+            });
+
+            const { file, fileName: fileFullName } = await fileSelection;
+
+            const fileContent = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.onerror = (e) => reject(e);
+                reader.readAsText(file);
+            });
+
+            const fileNameRegex = /^[a-zA-Z0-9-_]+\.[a-zA-Z0-9]+$/;
+            if (!fileNameRegex.test(fileFullName)) {
+                message.error('Invalid file name!');
+                return false;
+            }
+
+            if (files.find((file) => file.fileFullName === fileFullName)) {
+                message.error('File already exists!');
+                return false;
+            }
+
+            const { data } = await axiosInstance.post("/api/user/add-file", {
+                fileFullName
+            });
+
+
+            if (data.success) {
+                setFiles((prev) => {
+                    return sortFiles([...prev, data.data]);
+                });
+
+                const fileId = data?.data?.fileId;
+                console.log('fileId: ', fileId);
+
+                const response = await axiosInstance.post("/api/user/update-file", {
+                    fileId,
+                    fileContent
+                });
+
+                console.log('reponse :', response);
+
+                if (response.data.success && await handleGetAllFiles()) {
+                    message.success("File Upload is Done");
+                    return true;
+                }
+                else {
+                    message.error('Failed to Upload new file: ' + response.data.error);
+                    return false;
+                }
+            } else {
+                message.error('Failed to Upload new file: ' + data.error);
+                return false;
+            }
+        } catch (error) {
+            message.error('Failed to Upload new file. Please try again.');
+            return false;
+        }
+    };
+
 
     const value = {
         isSideBarOpen,
@@ -556,6 +627,7 @@ const EditorProvider = ({ children }) => {
         handleDeleteFile,
         handleFileOnClick,
         handleSaveFile,
+        handleUploadFile,
 
         openFile,
         setOpenFile,

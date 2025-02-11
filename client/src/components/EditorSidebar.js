@@ -8,7 +8,7 @@ import Loading from './Loading';
 
 const EditorSidebar = () => {
 
-  const { isSideBarOpen, setIsSideBarOpen, handleFileOnClick, files, handleAddNewFile, handleGetAllFiles, handleDownloadFile, handleDeleteFile, handleRenameFile } = useContext(EditorContext);
+  const { isSideBarOpen, setIsSideBarOpen, handleFileOnClick, files, handleUploadFile, handleAddNewFile, handleGetAllFiles, handleDownloadFile, handleDeleteFile, handleRenameFile } = useContext(EditorContext);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -21,8 +21,7 @@ const EditorSidebar = () => {
         if (!await handleGetAllFiles()) {
           navigate('/login');
         }
-        else 
-        {
+        else {
 
         }
 
@@ -75,6 +74,22 @@ const EditorSidebar = () => {
           <FilePlus size={20} className="mr-2" />
           New File
         </button>
+        <button
+          className="px-4 py-1 w-full text-left hover:bg-neutral-900 flex items-center text-gray-100"
+          onClick={async () => {
+            await handleUploadFile();
+          }}
+        >
+          
+          <FilePlus size={20} className="mr-2" />
+          Upload File
+        </button>
+
+        <input
+          type='file'
+          className='hidden'
+          id='upload-file-input'
+        ></input>
 
       </div>
       <div className='px-1 border border-neutral-800'></div>
