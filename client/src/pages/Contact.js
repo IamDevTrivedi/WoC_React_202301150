@@ -174,14 +174,7 @@ const Contact = () => {
                                     <Mail className="h-6 w-6 text-gray-200 mr-3 mt-1" />
                                     <div>
                                         <h3 className="text-lg font-medium text-gray-200">Email</h3>
-                                        <p className="text-gray-300">support@editflow.com</p>
-                                    </div>
-                                </div>
-                                <div className="flex items-start">
-                                    <Phone className="h-6 w-6 text-gray-200 mr-3 mt-1" />
-                                    <div>
-                                        <h3 className="text-lg font-medium text-gray-200">Phone</h3>
-                                        <p className="text-gray-300">+1 (555) 123-4567</p>
+                                        <p className="text-gray-300">devtrivedi.work@gmail.com</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start">
@@ -189,9 +182,9 @@ const Contact = () => {
                                     <div>
                                         <h3 className="text-lg font-medium text-gray-200">Address</h3>
                                         <p className="text-gray-300">
-                                            1292 Moire Pike<br />
-                                            San Francisco, CA 94105<br />
-                                            United States
+                                            DAIICT-campus<br />
+                                            near, Reliance Cross Rd<br />
+                                            Gandhinagar, Gujarat, India, 382007
                                         </p>
                                     </div>
                                 </div>

@@ -120,7 +120,7 @@ const PrivacyPolicy = () => {
                             If you have any questions about this Privacy Policy, please contact us at:
                         </p>
                         <p className="text-gray-300">
-                            Email: <a href="mailto:privacy@editflow.com" className="text-gray-300 hover:text-white transition-colors">privacy@editflow.com</a>
+                            Email: <a href="mailto:devtrivedi.work@gmail.com" className="text-gray-300 hover:text-white transition-colors">devtrivedi.work@gmail.com</a>
                         </p>
                     </section>
 

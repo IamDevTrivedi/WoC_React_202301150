@@ -76,7 +76,7 @@ const About = () => {
                         </div>
                         <div className="flex items-center text-gray-600 hover:text-white transition-colors">
                             <Mail size={24} className="mr-2" />
-                            <a href="mailto:info@editflow.com" className="hover:text-white transition-colors">info@editflow.com</a>
+                            <a href="mailto:devtrivedi.work@gmail.com" className="hover:text-white transition-colors">devtrivedi.work@gmail.com</a>
                         </div>
                     </section>
                 </div>
