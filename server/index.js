@@ -63,7 +63,7 @@ require('./sockets/codeRoom.socket')(io);
 // Base URL
 app.get("/", (req, res) => {
   logger.get("/");
-  res.send("This is the Base URL for the Backend Server For the Project : EditFlow");
+  res.send("This is the Base URL for the Backend Server For the Project : CodeWhisper");
 });
 
 // API routes setup

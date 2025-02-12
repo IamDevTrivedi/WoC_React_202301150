@@ -41,7 +41,7 @@ export function Login() {
     }
   })
 
-  document.title = "Login | EditFlow";
+  document.title = "Login | CodeWhisper";
 
   return (
 
@@ -53,10 +53,10 @@ export function Login() {
 
         <div className=" border border-neutral-600 max-w-md w-full mx-auto rounded-xl md:rounded-2xl p-4 md:p-8 shadow-input bg-black">
           <h2 className="font-bold text-xl text-neutral-200">
-            Welcome back to EditFlow
+            Welcome back to CodeWhisper
           </h2>
           <p className="text-sm max-w-sm mt-2 text-neutral-300">
-            Login to your EditFlow account
+            Login to your CodeWhisper account
           </p>
           <form className="my-8" onSubmit={handleSubmit}>
             <LabelInputContainer className="mb-4">
@@ -64,7 +64,7 @@ export function Login() {
               <Input
                 id="email"
                 name="email"
-                placeholder="batman@editflow.com"
+                placeholder="batman@codewhisper.com"
                 type="email"
                 value={formData.email}
                 onChange={handleChange}

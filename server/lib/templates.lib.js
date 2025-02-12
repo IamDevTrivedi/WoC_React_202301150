@@ -78,7 +78,7 @@ const generateWelcomeEmail = ({ name, year }) => {
                     <p>
                         We're thrilled to have you join our community. Your account has been successfully created, and we can't wait for you to explore all the amazing features our platform has to offer.
                     </p>
-                    <a href="https://editflow.netlify.app" class="button">Get Started</a>
+                    <a href="https://codewhisper.vercel.app/" class="button">Get Started</a>
                     <p style="font-size: 14px; color: #718096;">
                         If you have any questions or need assistance, don't hesitate to reach out to our support team.
                     </p>
@@ -362,7 +362,7 @@ const generateForgotUsernameEmail = ({ name, date, email, username, year }) => {
                 <p>
                     This request was made on ${date}. If you did not make this request, please contact our support team immediately.
                 </p>
-                <a href="https://editflow.netlify.app/login" class="button">Log In Now</a>
+                <a href="https://codewhisper.vercel.app/login" class="button">Log In Now</a>
                 <p style="font-size: 14px; color: #718096;">
                     If you have any questions or concerns, please don't hesitate to reach out to our support team.
                 </p>

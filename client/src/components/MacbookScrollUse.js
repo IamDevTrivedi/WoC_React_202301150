@@ -9,7 +9,7 @@ export function MacbookScrollUse() {
             <MacbookScroll
                 title={
                     <span className="text-white text-4xl font-bold">
-                        Key Features of EditFlow
+                        Key Features of CodeWhisper
                     </span>
                 }
                 badge={

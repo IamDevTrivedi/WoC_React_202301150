@@ -307,7 +307,7 @@ export default function CodeRoom() {
     }
 
 
-    document.title = `${roomState.name || 'Code Room'} | EditFlow`;
+    document.title = `${roomState.name || 'Code Room'} | CodeWhisper`;
 
 
     if (isMobileDevice) {

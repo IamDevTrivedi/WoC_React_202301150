@@ -1,10 +1,10 @@
-# EditFlow
+# CodeWhisper
 
-EditFlow is a collaborative coding platform that allows developers to write, share, and collaborate on code in real-time. With support for multiple programming languages and a robust feature set, EditFlow provides a seamless environment for both individual developers and teams.
+CodeWhisper is a collaborative coding platform that allows developers to write, share, and collaborate on code in real-time. With support for multiple programming languages and a robust feature set, CodeWhisper provides a seamless environment for both individual developers and teams.
 
 ## 🌐 Live Demo
 
-Live at: [https://editflow.netlify.app/](https://editflow.netlify.app/)
+Live at: [https://codewhisper.vercel.app/](https://codewhisper.vercel.app/)
 
 
 ## ✨ Features

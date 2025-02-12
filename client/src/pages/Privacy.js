@@ -16,7 +16,7 @@ const PrivacyPolicy = () => {
         { id: 'contact-us', title: 'Contact Us' },
     ]
 
-    document.title = "Privacy Policy | EditFlow";
+    document.title = "Privacy Policy | CodeWhisper";
 
     return (
         <>
@@ -49,7 +49,7 @@ const PrivacyPolicy = () => {
                             We collect information you provide directly to us when you create an account, set up your profile, or use our services. This may include your name, email address, and any other information you choose to provide.
                         </p>
                         <p className="text-gray-300">
-                            We use this information to provide and improve EditFlow, communicate with you, and analyze how our services are used.
+                            We use this information to provide and improve CodeWhisper, communicate with you, and analyze how our services are used.
                         </p>
                     </section>
 
@@ -69,7 +69,7 @@ const PrivacyPolicy = () => {
                     <section id="cookies" className="mb-8">
                         <h2 className="text-2xl font-semibold text-gray-200 mb-4">Cookies and Tracking Technologies</h2>
                         <p className="text-gray-300">
-                            We use cookies and similar tracking technologies to collect information about your interactions with EditFlow. You can control cookies through your browser settings and other tools.
+                            We use cookies and similar tracking technologies to collect information about your interactions with CodeWhisper. You can control cookies through your browser settings and other tools.
                         </p>
                     </section>
 
@@ -96,7 +96,7 @@ const PrivacyPolicy = () => {
                     <section id="children-privacy" className="mb-8">
                         <h2 className="text-2xl font-semibold text-gray-200 mb-4">Children's Privacy</h2>
                         <p className="text-gray-300">
-                            EditFlow is not intended for children under 13. We do not knowingly collect personal information from children under 13. If you believe we have collected information from a child under 13, please contact us.
+                            CodeWhisper is not intended for children under 13. We do not knowingly collect personal information from children under 13. If you believe we have collected information from a child under 13, please contact us.
                         </p>
                     </section>
 

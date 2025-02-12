@@ -27,7 +27,7 @@ function JoinRoom() {
     }
   };
 
-  document.title = "Join Room | EditFlow";
+  document.title = "Join Room | CodeWhisper";
 
   return (
     <>

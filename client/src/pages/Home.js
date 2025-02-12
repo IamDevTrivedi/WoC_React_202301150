@@ -9,7 +9,7 @@ import { Navbar } from '../components/NavBarHome'
 export default function Home() {
 
 
-  document.title = "EditFlow";
+  document.title = "CodeWhisper";
 
   return (
     <div className='bg-black'>

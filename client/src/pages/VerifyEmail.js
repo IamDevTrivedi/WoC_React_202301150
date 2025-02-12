@@ -54,7 +54,7 @@ export default function VerifyEmail() {
         }
     })
 
-    document.title = "Verify Email | EditFlow";
+    document.title = "Verify Email | CodeWhisper";
 
     return (
 

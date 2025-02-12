@@ -9,7 +9,7 @@ import Footer from '../components/Footer'
 const Contact = () => {
 
 
-    document.title = "Contact Us | EditFlow";
+    document.title = "Contact Us | CodeWhisper";
 
 
     const [formData, setFormData] = useState({

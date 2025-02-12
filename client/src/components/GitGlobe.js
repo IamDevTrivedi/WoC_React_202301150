@@ -411,11 +411,11 @@ export function GlobeDemo() {
                     className="div">
                     <h2
                         className="text-center text-xl md:text-4xl font-bold text-white">
-                        Collaborate & Code with EditFlow
+                        Collaborate & Code with CodeWhisper
                     </h2>
                     <p
                         className="text-center text-base md:text-lg font-normal text-neutral-200 max-w-md mt-2 mx-auto">
-                        EditFlow allows developers to join and code together in real-time. Explore, create, and connect with others!
+                        CodeWhisper allows developers to join and code together in real-time. Explore, create, and connect with others!
                     </p>
                 </motion.div>
                 <div

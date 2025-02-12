@@ -6,7 +6,7 @@ export function BackgroundLinesUse() {
         <BackgroundLines className="min-h-screen flex items-center justify-center w-full flex-col px-4">
             <h2
                 className="bg-clip-text text-transparent text-center bg-gradient-to-b from-neutral-600 to-white text-6xl md:text-7xl lg:text-7xl font-sans py-4 md:py-10 relative z-20 font-bold tracking-tight">
-                EditFlow, <br />
+                CodeWhisper, <br />
                 <span className="text-5xl md:text-4xl lg:text-6xl">Code Smarter. Collaborate Better.</span>
             </h2>
             <p

@@ -57,7 +57,7 @@ function CreateRoom() {
 
     };
 
-    document.title = "Create Room | EditFlow";
+    document.title = "Create Room | CodeWhisper";
 
     return (
         <>
@@ -69,7 +69,7 @@ function CreateRoom() {
                         Create a New Room
                     </h2>
                     <p className="text-sm max-w-sm mt-2 text-neutral-300">
-                        Set up your coding room in EditFlow
+                        Set up your coding room in CodeWhisper
                     </p>
                     <form className="my-8" onSubmit={handleSubmit}>
                         <LabelInputContainer className="mb-4">

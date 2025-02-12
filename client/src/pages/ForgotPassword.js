@@ -74,7 +74,7 @@ export default function ForgotPassword() {
     }
   }
 
-  document.title = "Reset Password | EditFlow";
+  document.title = "Reset Password | CodeWhisper";
 
   return (
 
@@ -97,7 +97,7 @@ export default function ForgotPassword() {
                   <Input
                     type='email'
                     id='email'
-                    placeholder="batman@editflow.com"
+                    placeholder="batman@codewhisper.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className='bg-neutral-800 border-neutral-600 text-white'

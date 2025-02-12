@@ -25,7 +25,7 @@ export function HeroHighlightUse() {
             >
                 Code smarter, collaborate better with{" "}
                 <Highlight className="text-white">
-                    EditFlow.
+                    CodeWhisper.
                 </Highlight>
             </motion.h1>
 

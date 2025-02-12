@@ -83,7 +83,7 @@ const EditorSidebar = () => {
       {/* Header */}
       <div className="p-4 flex items-center justify-between border-b border-neutral-800">
         <Link to="/" className={`text-white text-2xl font-semibold ${isSideBarOpen ? 'hidden' : 'block'}`}>
-          EditFlow
+          CodeWhisper
         </Link>
         <button
           onClick={toggleSidebar}

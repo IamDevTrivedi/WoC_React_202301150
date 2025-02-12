@@ -21,7 +21,7 @@ const About = () => {
         { name: "Dev Trivedi", role: "Head of Design", icon: Palette },
     ]
 
-    document.title = "About EditFlow | EditFlow";
+    document.title = "About CodeWhisper | CodeWhisper";
 
     return (
 
@@ -33,13 +33,13 @@ const About = () => {
             <div className="py-24 bg-black min-h-screen">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                     <section className="mb-16">
-                        <h1 className="text-4xl font-bold text-gray-100 mb-6">About EditFlow</h1>
+                        <h1 className="text-4xl font-bold text-gray-100 mb-6">About CodeWhisper</h1>
                         <h2 className="text-2xl font-semibold text-gray-200 mb-4">Who We Are</h2>
                         <p className="text-lg text-gray-300 mb-4">
-                            EditFlow is a cutting-edge platform designed to provide developers with a seamless coding experience across various programming languages. Our mission is to empower developers by offering a robust and intuitive environment for coding, collaboration, and learning.
+                            CodeWhisper is a cutting-edge platform designed to provide developers with a seamless coding experience across various programming languages. Our mission is to empower developers by offering a robust and intuitive environment for coding, collaboration, and learning.
                         </p>
                         <p className="text-lg text-gray-300">
-                            Founded in 2023, EditFlow has quickly become a trusted solution for developers worldwide. We are committed to fostering a community where developers can share knowledge, collaborate on projects, and enhance their coding skills.
+                            Founded in 2023, CodeWhisper has quickly become a trusted solution for developers worldwide. We are committed to fostering a community where developers can share knowledge, collaborate on projects, and enhance their coding skills.
                         </p>
                     </section>
 
@@ -65,11 +65,11 @@ const About = () => {
                     <section>
                         <h2 className="text-2xl font-semibold text-gray-100 mb-4">Follow Us</h2>
                         <div className="flex space-x-4 mb-4">
-                            <a href="https://www.instagram.com/editflow" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-pink-600 transition-colors">
+                            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-pink-600 transition-colors">
                                 <Instagram size={24} />
                                 <span className="sr-only">Instagram</span>
                             </a>
-                            <a href="https://twitter.com/editflow" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-400 transition-colors">
+                            <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-400 transition-colors">
                                 <Twitter size={24} />
                                 <span className="sr-only">Twitter</span>
                             </a>

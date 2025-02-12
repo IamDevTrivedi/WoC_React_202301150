@@ -55,7 +55,7 @@ export function SignUp() {
     //     }
     // })
 
-    document.title = "Sign Up | EditFlow";
+    document.title = "Sign Up | CodeWhisper";
 
     return (
 
@@ -65,10 +65,10 @@ export function SignUp() {
 
                 <div className="border-neutral-600 border max-w-md w-full mx-auto rounded-xl md:rounded-2xl p-4 md:p-8 shadow-input bg-black">
                     <h2 className="font-bold text-xl text-neutral-200">
-                        Welcome to EditFlow
+                        Welcome to CodeWhisper
                     </h2>
                     <p className="text-sm max-w-sm mt-2 text-neutral-300">
-                        Sign up to get started with EditFlow
+                        Sign up to get started with CodeWhisper
                     </p>
                     <form className="my-8" onSubmit={handleSubmit}>
                         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
@@ -102,7 +102,7 @@ export function SignUp() {
                             <Input
                                 id="email"
                                 name="email"
-                                placeholder="batman@editflow.com"
+                                placeholder="batman@codewhisper.com"
                                 type="email"
                                 value={formData.email}
                                 onChange={handleChange}

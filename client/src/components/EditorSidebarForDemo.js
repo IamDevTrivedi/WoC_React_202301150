@@ -17,7 +17,7 @@ const EditorSidebarForDemo = () => {
 
     const navigate = useNavigate();
 
-    document.title = "Try Now | EditFlow";
+    document.title = "Try Now | CodeWhisper";
 
     return (
         <div className="h-screen bg-black text-gray-50">
@@ -30,7 +30,7 @@ const EditorSidebarForDemo = () => {
                 {/* Header */}
                 <div className="p-4 flex items-center justify-between border-b border-neutral-900">
                     <Link to="/" className={`text-white text-2xl font-semibold ${!isSideBarOpen ? 'hidden' : 'block'}`}>
-                        EditFlow
+                        CodeWhisper
                     </Link>
                     <button
                         onClick={() => setIsSideBarOpen(!isSideBarOpen)}
