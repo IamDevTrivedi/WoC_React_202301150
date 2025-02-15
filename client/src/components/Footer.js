@@ -17,31 +17,31 @@ export function Footer() {
                 <div className="flex flex-col md:flex-row items-center gap-6 text-sm">
                     <Link
                         to="/about"
-                        className="hover:text-gray-50 transition-colors hover:text-sky-400"
+                        className="transition-colors hover:text-sky-400"
                     >
                         About
                     </Link>
                     <Link
                         to="/contact"
-                        className="hover:text-gray-50 transition-colors hover:text-sky-400"
+                        className="transition-colors hover:text-sky-400"
                     >
                         Contact
                     </Link>
                     <Link
                         to="/privacy"
-                        className="hover:text-gray-50 transition-colors hover:text-sky-400"
+                        className="transition-colors hover:text-sky-400"
                     >
                         Privacy
                     </Link>
                     <Link
                         to="/login"
-                        className="hover:text-gray-50 transition-colors hover:text-sky-400"
+                        className="transition-colors hover:text-sky-400"
                     >
                         Login
                     </Link>
                     <Link
                         to="/signup"
-                        className="hover:text-gray-50 transition-colors hover:text-sky-400"
+                        className="transition-colors hover:text-sky-400"
                     >
                         Sign Up
                     </Link>
