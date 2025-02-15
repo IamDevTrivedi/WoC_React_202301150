@@ -43,7 +43,7 @@ export default function ChatHeader() {
                 <div className="flex items-center gap-6">
                     <span
                         onClick={() => navigate(-1)}
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r bg-blue-900/30 border border-blue-800 hover:border hover:border-gray-400 transition-all duration-300 text-white text-sm font-medium shadow-md"
+                        className="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r bg-blue-900/30 border border-blue-800 hover:border hover:border-gray-400 transition-all duration-300 text-white text-sm font-medium shadow-md"
                     >
                         <MoveLeft size={16} />
                         Go Back
