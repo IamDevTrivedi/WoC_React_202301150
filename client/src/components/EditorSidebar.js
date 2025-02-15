@@ -1,9 +1,10 @@
 import { useState, useContext, useEffect } from 'react';
 import { Sidebar, Menu } from 'react-pro-sidebar';
-import { ChevronLeft, ChevronRight, Download, File, FilePlus, FolderPen, Trash2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Download, FilePlus, FolderPen, Trash2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { EditorContext } from '../Context/EditorContext';
 import Loading from './Loading';
+import { FileIcon, defaultStyles } from 'react-file-icon'; // New import
 
 const EditorSidebar = () => {
   const {
@@ -63,7 +64,44 @@ const EditorSidebar = () => {
     e.stopPropagation();
   };
 
+  // Helper function to get file extension
+  const getFileExtension = (filename) => {
+    return filename.split('.').pop().toLowerCase();
+  };
 
+  // Helper function to get file icon styles
+  const getFileIconStyles = (extension) => {
+    // Add more file types as needed
+    switch (extension) {
+      case 'js':
+        return defaultStyles.js;
+      case 'css':
+        return defaultStyles.css;
+      case 'html':
+        return defaultStyles.html;
+      case 'json':
+        return defaultStyles.json;
+      case 'jsx':
+        return defaultStyles.jsx;
+      case 'ts':
+        return defaultStyles.ts;
+      case 'tsx':
+        return defaultStyles.tsx;
+      case 'md':
+        return defaultStyles.md;
+      case 'txt':
+        return { glyphColor: 'lightgray', color: 'gray' };
+      case 'svg':
+        return defaultStyles.svg;
+      case 'png':
+      case 'jpg':
+      case 'jpeg':
+      case 'gif':
+        return defaultStyles.image;
+      default:
+        return { glyphColor: '#cfcfcf', color: '#8d8d8d' };
+    }
+  };
 
   if (loading) {
     return <Loading />;
@@ -135,50 +173,63 @@ const EditorSidebar = () => {
         }}
       >
         <ul>
-          {files.map((file, index) => (
-            <li
-              key={index}
-              className="flex items-center justify-between text-gray-300 px-4 py-1"
-            >
-              <span className="flex items-center cursor-pointer" onClick={() => handleFileOnClick(file.fileId)}>
-                <File size={15} className="mr-2" />
-                {openFile === file.fileId ? (
-                  <span className="text-white">{file.fileFullName}</span>
-                ) : (
-                  <span className='text-gray-400'>{file.fileFullName}</span>
-                )}
-              </span>
-              <span className="flex items-center space-x-2">
-                <span>
-                  <Download
-                    onClick={() => {
-                      console.log('Download file:', file);
-                      handleDownloadFile(file.fileId);
-                    }}
-                    size={20}
-                    className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
-                    aria-label="Edit folder"
-                  />
+          {files.map((file, index) => {
+            const extension = getFileExtension(file.fileFullName);
+            const iconStyles = getFileIconStyles(extension);
+
+            return (
+              <li
+                key={index}
+                className="flex items-center justify-between text-gray-300 px-4 py-1"
+              >
+                <span className="flex items-center cursor-pointer" onClick={() => handleFileOnClick(file.fileId)}>
+                  {/* File Icon */}
+                  {/* good here */}
+                  <span style={{ width: '18px', height: '18px', marginRight: '8px' }}>
+                    <FileIcon
+                      extension={extension}
+                      {...iconStyles}
+                    />
+                  </span>
+
+                  {openFile === file.fileId ? (
+                    <span className="text-white">{file.fileFullName}</span>
+                  ) : (
+                    <span className='text-gray-400'>{file.fileFullName}</span>
+                  )}
                 </span>
-                <span>
-                  <FolderPen
-                    onClick={() => handleRenameFile(file.fileId)}
-                    size={20}
-                    className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
-                    aria-label="Edit folder"
-                  />
+                <span className="flex items-center space-x-2">
+                  <span>
+                    <Download
+                      onClick={() => {
+                        console.log('Download file:', file);
+                        handleDownloadFile(file.fileId);
+                      }}
+                      size={20}
+                      className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
+                      aria-label="Edit folder"
+                    />
+                  </span>
+                  <span>
+                    <FolderPen
+                      onClick={() => handleRenameFile(file.fileId)}
+                      size={20}
+                      className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
+                      aria-label="Edit folder"
+                    />
+                  </span>
+                  <span>
+                    <Trash2
+                      onClick={() => handleDeleteFile(file.fileId)}
+                      size={20}
+                      className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
+                      aria-label="Delete file"
+                    />
+                  </span>
                 </span>
-                <span>
-                  <Trash2
-                    onClick={() => handleDeleteFile(file.fileId)}
-                    size={20}
-                    className="cursor-pointer hover:bg-neutral-700 p-1 hover:text-white text-gray-400 rounded-lg"
-                    aria-label="Delete file"
-                  />
-                </span>
-              </span>
-            </li>
-          ))}
+              </li>
+            );
+          })}
         </ul>
 
         {files.length === 0 && (
