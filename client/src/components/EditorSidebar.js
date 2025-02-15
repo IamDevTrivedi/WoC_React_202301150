@@ -185,7 +185,7 @@ const EditorSidebar = () => {
                 <span className="flex items-center cursor-pointer" onClick={() => handleFileOnClick(file.fileId)}>
                   {/* File Icon */}
                   {/* good here */}
-                  <span style={{ width: '18px', height: '18px', marginRight: '8px' }}>
+                  <span style={{ width: '15px', height: '15px', marginRight: '8px' }}>
                     <FileIcon
                       extension={extension}
                       {...iconStyles}
