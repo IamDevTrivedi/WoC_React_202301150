@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { HeroHighlight, Highlight } from "./ui/hero-highlight";
-import { PlayCircle, LogIn, UserPlus } from "lucide-react";
+import { LogIn, UserPlus } from "lucide-react";
 import { IconTerminal2 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 
@@ -39,7 +39,7 @@ export function HeroHighlightUse() {
                 <div>
                     <Link
                         to="/editor-demo"
-                        className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium text-lg rounded-lg shadow-lg transition-all duration-200 flex items-center gap-2">
+                        className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-medium text-lg rounded-lg shadow-lg transition-all duration-200 flex items-center gap-2">
                         <IconTerminal2 className="w-5 h-5" />
                         Try a Demo
                     </Link>
@@ -48,13 +48,13 @@ export function HeroHighlightUse() {
                 <div className="flex gap-4 items-center">
                     <Link
                         to="/login"
-                        className="px-6 py-3 border-2 border-blue-500 text-blue-500 hover:bg-blue-900/20 font-medium text-lg rounded-lg shadow-lg transition-all duration-200 flex items-center gap-2">
+                        className="px-6 py-3 border-2 border-indigo-500 text-indigo-500 hover:bg-indigo-900/20 font-medium text-lg rounded-lg shadow-lg transition-all duration-200 flex items-center gap-2">
                         <LogIn className="w-5 h-5" />
                         Login
                     </Link>
                     <Link
                         to="/signup"
-                        className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-medium text-lg rounded-lg shadow-lg transition-all duration-200 flex items-center gap-2">
+                        className="px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-medium text-lg rounded-lg shadow-lg transition-all duration-200 flex items-center gap-2">
                         <UserPlus className="w-5 h-5" />
                         Sign Up Now
                     </Link>

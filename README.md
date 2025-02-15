@@ -11,7 +11,7 @@ Live at: [https://codewhisper.vercel.app/](https://codewhisper.vercel.app/)
 
 - **Multi-Language Support**: Write and execute code in multiple programming languages effortlessly
 - **Real-Time Collaboration**: Work together with your team in shared code rooms
-- **One-Click Code Sharing**: Generate shareable links instantly for your code
+- **Smart AI Assitant for Code Debug**: intiutive chat interface for Code help and Degubbing made using Google's Gemini model
 - **100% Uptime Guarantee**: Experience reliable, uninterrupted coding sessions
 - **Secure and Private**: Enhanced security with robust authentication
 - **Customizable Workspace**: Tailor your coding environment to your preferences

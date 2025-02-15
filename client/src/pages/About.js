@@ -39,7 +39,7 @@ const About = () => {
                             CodeWhisper is a cutting-edge platform designed to provide developers with a seamless coding experience across various programming languages. Our mission is to empower developers by offering a robust and intuitive environment for coding, collaboration, and learning.
                         </p>
                         <p className="text-lg text-gray-300">
-                            Founded in 2023, CodeWhisper has quickly become a trusted solution for developers worldwide. We are committed to fostering a community where developers can share knowledge, collaborate on projects, and enhance their coding skills.
+                            Founded in 2025, CodeWhisper has quickly become a trusted solution for developers collegewide. We are committed to fostering a community where developers can share knowledge, collaborate on projects, and enhance their coding skills.
                         </p>
                     </section>
 

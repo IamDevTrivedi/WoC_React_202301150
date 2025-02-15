@@ -11,7 +11,7 @@ export default function CodeBlockUse() {
     <ul>
             <li>Code in multiple languages.</li>
             <li>Real-time collaboration.</li>
-            <li>One-click code sharing.</li>
+            <li>Smart AI Assitant for Code Debug</li>
             <li>Smart syntax highlighting.</li>
     </ul>
 </div>

@@ -6,6 +6,7 @@ import {
     IconEaseInOut,
     IconHeart,
     IconHelp,
+    IconRobot,
     IconRouteAltLeft,
     IconTerminal2,
 } from "@tabler/icons-react";
@@ -27,9 +28,9 @@ export function FeaturesSectionForHome() {
             icon: <IconRouteAltLeft />,
         },
         {
-            title: "One-Click Code Sharing",
-            description: "Share your code instantly with anyone using a single link.",
-            icon: <IconEaseInOut />,
+            title: "AI Code Assistant",
+            description: "Get instant code help and debugging help.",
+            icon: <IconRobot />,
         },
         {
             title: "100% Uptime Guarantee",

@@ -16,6 +16,7 @@ Directory structure:
     │   ├── .env.example
     │   ├── .gitignore
     │   ├── public/
+    │   │   ├── _redirects
     │   │   ├── index.html
     │   │   ├── manifest.json
     │   │   └── robots.txt
@@ -109,6 +110,7 @@ Directory structure:
     │       │   ├── Loading.js
     │       │   ├── LoadingDots.js
     │       │   ├── MacbookScrollUse.js
+    │       │   ├── MarkdownMessage.js
     │       │   ├── NavBarHome.js
     │       │   └── ui/
     │       │       ├── 3d-pin.jsx
