@@ -1,7 +1,4 @@
-"use client";
-
 import React from "react";
-
 import { CodeBlock } from "./ui/code-block";
 
 export default function CodeBlockUse() {
@@ -21,7 +18,7 @@ export default function CodeBlockUse() {
         <div className="mt-10 max-w-3xl mx-auto w-full">
             <CodeBlock
                 language="html"
-                filename="EditFlowFeatures.html"
+                filename="CodeWhisperFeatures.html"
                 highlightLines={[5, 6, 7, 8]}
                 code={code}
             />
