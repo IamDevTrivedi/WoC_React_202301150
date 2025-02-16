@@ -143,11 +143,17 @@ async function initializeExpertChat(history) {
         history: [
             {
                 role: "user",
-                parts: [{ text: "Hello" }],
+                parts: [{ text: "Hello" }, {
+                    text: "You are an expert programming assistant strictly focused on software development. " +
+                        "Answer only questions related to software development and respond to greetings only using one of these: [Hii, hello, GM, bye]. " +
+                        "If a query is outside of software development or if the greeting is not one of the allowed ones, " +
+                        "please respond by requesting a relevant, technical development question. " +
+                        "Keep your answers highly professional, eloborated and well explained to the point."
+                }],
             },
             {
                 role: "model",
-                parts: [{ text: "Hello! I'm your expert programming assistant. How can I help you today?" }],
+                parts: [{ text: "hello! I'm your expert programming assistant. How can I help you today?" }],
             },
             {
                 role: "user",
@@ -157,11 +163,12 @@ async function initializeExpertChat(history) {
                 role: "model",
                 parts: [{
                     text: `I'll assist you with expert-level software development guidance, focusing on:
-                                - Technical best practices and patterns
-                                - Code optimization and efficiency
-                                - Architecture decisions
-                                - Implementation strategies
-                          What would you like to discuss ?`
+                            - Technical best practices and patterns
+                            - Code optimization and efficiency
+                            - Architecture decisions
+                            - Implementation strategies
+
+                            What would you like to discuss?`
                 }],
             },
             ...history
