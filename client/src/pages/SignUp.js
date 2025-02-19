@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 import { cn } from "../lib/utils";
@@ -26,7 +26,7 @@ export function SignUp() {
     };
 
 
-    const { register, userData } = useContext(AppContext);
+    const { register } = useContext(AppContext);
     const navigate = useNavigate();
 
 

@@ -1,6 +1,5 @@
 import React from "react";
 import { Send } from "lucide-react";
-import { message } from 'antd';
 
 
 export function ChatInput({ value, onChange, onSend, disabled }) {

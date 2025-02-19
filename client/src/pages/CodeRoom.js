@@ -161,7 +161,7 @@ export default function CodeRoom() {
 
                 socket.on('disconnect', () => {
                     console.log("Disconnected from server");
-                    message.error('Disconnected from server');
+                    // message.error('Disconnected from server');
                 });
 
             } catch (error) {
@@ -248,7 +248,7 @@ export default function CodeRoom() {
     const handleFileDownload = (type) => {
 
         const content = type === 'input' ? editorState.input : editorState.content;
-        const fileName = `code-${type}-${Date.now().toString()}.txt`;
+        const fileName = `code-${type}-${Date.now().toString()}.${editorState.language}`;
 
         const blob = new Blob([content], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
