@@ -9,14 +9,42 @@ Live at: [https://codewhisper.vercel.app/](https://codewhisper.vercel.app/)
 
 ## ✨ Features
 
-- **Multi-Language Support**: Write and execute code in multiple programming languages effortlessly
-- **Real-Time Collaboration**: Work together with your team in shared code rooms
-- **Smart AI Assitant for Code Debug**: intiutive chat interface for Code help and Degubbing made using Google's Gemini model
-- **100% Uptime Guarantee**: Experience reliable, uninterrupted coding sessions
-- **Secure and Private**: Enhanced security with robust authentication
-- **Customizable Workspace**: Tailor your coding environment to your preferences
-- **Seamless Code Import/Export**: Effortlessly transfer code between projects and tools
-- **Trusted Platform**: Strong focus on code privacy and user satisfaction
+1. **Custom User Authentication & Private Routing**
+
+   - Implement a custom user authentication system.
+   - Secure routes so that only authenticated users can access specific pages.
+
+2. **Editor Demo**
+
+   - A single-file editor mode that does not require login.
+   - Designed to give users a real-time, hassle-free editing experience without saving.
+
+3. **Full-Featured Code Editor**
+
+   - **Multi-Language Support**
+     - Supports various programming languages.
+     - Provides proper code formatting.
+   - **File Management**
+     - Files are saved into the user’s account.
+     - Accessible from anywhere once the user is logged in.
+   - **Usable Features**
+     - Delete, rename, download, and upload files.
+     - Upload input and run code within the editor.
+   - **Convenient Features**
+     - Drag-and-drop functionality for uploading files.
+
+4. **Collaborative Code Room (Extra Feature)**
+
+   - Allows users to create or join a collaborative coding room using a room ID.
+   - **Real-Time Collaboration**
+     - Multiple users can work on the same file concurrently.
+     - Includes features like upload, download, and run code for collaborative work.
+
+5. **AI Assistant**
+   - Integrates Gemini’s model for code assistance.
+   - **Output Handling**
+     - Parses Gemini’s Markdown output into HTML and is styled with TailwindCSS to enhance the user experience.
+
 
 ## 🚀 Getting Started
 
