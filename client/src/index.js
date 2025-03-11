@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AppContextProvider } from './Context/AppContext';
 import { EditorTryProvider } from './Context/EditorTryContext';
 import { EditorProvider } from './Context/EditorContext';
+import { Analytics } from '@vercel/analytics/react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,6 +16,7 @@ root.render(
       <AppContextProvider>
         <BrowserRouter>
           <App />
+          <Analytics />
         </BrowserRouter>
       </AppContextProvider>
     </EditorProvider>
